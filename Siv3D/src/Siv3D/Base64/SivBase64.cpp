@@ -96,8 +96,7 @@ namespace s3d
 		[[nodiscard]]
 		inline Base64Length DecodeLength(const Ch* pSrc, size_t inputLength) noexcept
 		{
-			while (inputLength
-				&& (detail::decodeTable[pSrc[inputLength - 1]] == 0xff))
+			while (inputLength && (pSrc[inputLength - 1] == '='))
 			{
 				--inputLength;
 			}
