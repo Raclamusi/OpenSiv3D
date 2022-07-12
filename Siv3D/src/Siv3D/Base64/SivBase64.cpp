@@ -94,11 +94,23 @@ namespace s3d
 
 		template <class Ch>
 		[[nodiscard]]
-		inline Base64Length DecodeLength(const Ch* pSrc, size_t inputLength) noexcept
+		inline Base64Length DecodeLength(const Ch* pSrc, size_t inputLength, SkipValidation skipValidation) noexcept
 		{
 			while (inputLength && (pSrc[inputLength - 1] == '='))
 			{
 				--inputLength;
+			}
+
+			if (not skipValidation)
+			{
+				for (size_t i = 0; i < inputLength; ++i)
+				{
+					if ((pSrc[i] > 0xff)
+						|| (detail::decodeTable[static_cast<uint8>(pSrc[i])] == 0xff)) // invalid character
+					{
+						return{ 0, 0, 0 };
+					}
+				}
 			}
 
 			const size_t block = (inputLength / 4);
@@ -125,9 +137,9 @@ namespace s3d
 
 		template <class Ch>
 		[[nodiscard]]
-		inline Blob Decode(const Ch* pSrc, const size_t inputLength)
+		inline Blob Decode(const Ch* pSrc, const size_t inputLength, SkipValidation skipValidation)
 		{
-			const auto [block, remainder, binarySize] = detail::DecodeLength(pSrc, inputLength);
+			const auto [block, remainder, binarySize] = detail::DecodeLength(pSrc, inputLength, skipValidation);
 
 			if (binarySize == 0)
 			{
@@ -146,19 +158,9 @@ namespace s3d
 
 				const uint8 v3 = detail::decodeTable[static_cast<uint8>(*pSrc++)];
 
-				if (v3 == 0xFF)
-				{
-					break;
-				}
-
 				*pDst++ = static_cast<Byte>((v2 << 4 | v3 >> 2) & 0xff);
 
 				const uint8 v4 = detail::decodeTable[static_cast<uint8>(*pSrc++)];
-
-				if (v4 == 0xFF)
-				{
-					break;
-				}
 
 				*pDst++ = static_cast<Byte>((v3 << 6 | v4) & 0xff);
 			}
@@ -199,14 +201,14 @@ namespace s3d
 			detail::Encode(data, size, dst);
 		}
 
-		Blob Decode(const StringView base64)
+		Blob Decode(const StringView base64, SkipValidation skipValidation)
 		{
-			return detail::Decode(base64.data(), base64.size());
+			return detail::Decode(base64.data(), base64.size(), skipValidation);
 		}
 
-		Blob Decode(const std::string_view base64)
+		Blob Decode(const std::string_view base64, SkipValidation skipValidation)
 		{
-			return detail::Decode(base64.data(), base64.size());
+			return detail::Decode(base64.data(), base64.size(), skipValidation);
 		}
 	}
 }
