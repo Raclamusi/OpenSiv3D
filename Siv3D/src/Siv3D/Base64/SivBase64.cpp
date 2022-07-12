@@ -101,15 +101,6 @@ namespace s3d
 				--inputLength;
 			}
 
-			for (size_t i = 0; i < inputLength; ++i)
-			{
-				if ((pSrc[i] > 0xff)
-					|| (detail::decodeTable[static_cast<uint8>(pSrc[i])] == 0xff)) // invalid character
-				{
-					return{ 0, 0, 0 };
-				}
-			}
-
 			const size_t block = (inputLength / 4);
 			const size_t remainder = (inputLength % 4);
 			const size_t baseLength = (block * 3);
@@ -155,9 +146,19 @@ namespace s3d
 
 				const uint8 v3 = detail::decodeTable[static_cast<uint8>(*pSrc++)];
 
+				if (v3 == 0xFF)
+				{
+					break;
+				}
+
 				*pDst++ = static_cast<Byte>((v2 << 4 | v3 >> 2) & 0xff);
 
 				const uint8 v4 = detail::decodeTable[static_cast<uint8>(*pSrc++)];
+
+				if (v4 == 0xFF)
+				{
+					break;
+				}
 
 				*pDst++ = static_cast<Byte>((v3 << 6 | v4) & 0xff);
 			}
