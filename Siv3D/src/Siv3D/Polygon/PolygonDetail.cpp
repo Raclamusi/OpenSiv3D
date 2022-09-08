@@ -1250,7 +1250,7 @@ namespace s3d
 
 			const boost::geometry::strategy::buffer::distance_symmetric<double> distance_strategy{ distance };
 			const boost::geometry::strategy::buffer::end_flat end_strategy{};
-			const boost::geometry::strategy::buffer::point_circle circle_strategy{ 0 };
+			const boost::geometry::strategy::buffer::point_square point_strategy{};
 			const boost::geometry::strategy::buffer::join_miter join_strategy{ 5 };
 			const boost::geometry::strategy::buffer::side_straight side_strategy;
 
@@ -1260,13 +1260,13 @@ namespace s3d
 			{
 				gLineString lines(points.begin(), points.end());
 
-				lines.push_back(points.front());
+				lines.insert(lines.end(), lines.begin(), lines.begin() + 2);
 
-				boost::geometry::buffer(lines, multiPolygon, distance_strategy, side_strategy, join_strategy, end_strategy, circle_strategy);
+				boost::geometry::buffer(lines, multiPolygon, distance_strategy, side_strategy, join_strategy, end_strategy, point_strategy);
 			}
 			else
 			{
-				boost::geometry::buffer(gLineString(points.begin(), points.end()), multiPolygon, distance_strategy, side_strategy, join_strategy, end_strategy, circle_strategy);
+				boost::geometry::buffer(gLineString(points.begin(), points.end()), multiPolygon, distance_strategy, side_strategy, join_strategy, end_strategy, point_strategy);
 			}
 
 			if (multiPolygon.size() != 1)
@@ -1329,7 +1329,6 @@ namespace s3d
 			bufferQuality = Max(0, bufferQuality);
 
 			const boost::geometry::strategy::buffer::distance_symmetric<double> distance_strategy{ distance };
-			const boost::geometry::strategy::buffer::end_round end_strategy{ static_cast<size_t>(bufferQuality) };
 			const boost::geometry::strategy::buffer::point_circle circle_strategy{ static_cast<size_t>(bufferQuality) };
 			const boost::geometry::strategy::buffer::join_round join_strategy{ static_cast<size_t>(bufferQuality) };
 			constexpr boost::geometry::strategy::buffer::side_straight side_strategy{};
@@ -1339,14 +1338,24 @@ namespace s3d
 			if (closeRing && (2 < points.size()))
 			{
 				gLineString lines(points.begin(), points.end());
+				
+				lines.insert(lines.end(), lines.begin(), lines.begin() + 2);
 
-				lines.push_back(points.front());
-
+				const boost::geometry::strategy::buffer::end_flat end_strategy{};
 				boost::geometry::buffer(lines, multiPolygon, distance_strategy, side_strategy, join_strategy, end_strategy, circle_strategy);
 			}
 			else
 			{
-				boost::geometry::buffer(gLineString(points.begin(), points.end()), multiPolygon, distance_strategy, side_strategy, join_strategy, end_strategy, circle_strategy);
+				if (points.front() == points.back())
+				{
+					const boost::geometry::strategy::buffer::end_flat end_strategy{};
+					boost::geometry::buffer(gLineString(points.begin(), points.end()), multiPolygon, distance_strategy, side_strategy, join_strategy, end_strategy, circle_strategy);
+				}
+				else
+				{
+					const boost::geometry::strategy::buffer::end_round end_strategy{ static_cast<size_t>(bufferQuality) };
+					boost::geometry::buffer(gLineString(points.begin(), points.end()), multiPolygon, distance_strategy, side_strategy, join_strategy, end_strategy, circle_strategy);
+				}
 			}
 
 			if (multiPolygon.size() != 1)

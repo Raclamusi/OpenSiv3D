@@ -10,6 +10,7 @@
 //-----------------------------------------------
 
 # include <Siv3D/TextureRegion.hpp>
+# include <Siv3D/SDFGlyph.hpp>
 # include <Siv3D/System.hpp>
 # include <Siv3D/Font/IFont.hpp>
 # include <Siv3D/Common/Siv3DEngine.hpp>
@@ -21,7 +22,7 @@ namespace s3d
 	{
 		if (not prerender(font, clusters, true))
 		{
-			return RectF{ 0 };
+			return RectF::Empty();
 		}
 		updateTexture();
 
@@ -280,7 +281,7 @@ namespace s3d
 	{
 		if (not prerender(font, { cluster }, false))
 		{
-			return RectF{ 0 };
+			return RectF::Empty();
 		}
 		updateTexture();
 
@@ -395,7 +396,7 @@ namespace s3d
 	{
 		if (not prerender(font, clusters, true))
 		{
-			return RectF{ 0 };
+			return RectF::Empty();
 		}
 
 		const auto& prop = font.getProperty();
@@ -447,7 +448,7 @@ namespace s3d
 	{
 		if (not prerender(font, { cluster }, false))
 		{
-			return RectF{ 0 };
+			return RectF::Empty();
 		}
 
 		const auto& prop = font.getProperty();

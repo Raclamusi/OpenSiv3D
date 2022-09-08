@@ -117,6 +117,11 @@ namespace s3d
 		// do nothing
 	}
 
+	void CRenderer2D_Null::addRoundRectFrame(const RoundRect&, const RoundRect&, const Float4&)
+	{
+		// do nothing
+	}
+
 	void CRenderer2D_Null::addLineString(const LineStyle&, const Vec2*, const size_t, const Optional<Float2>&, const float, const bool, const Float4&, const CloseRing)
 	{
 		// do nothing
@@ -247,7 +252,7 @@ namespace s3d
 
 	Rect CRenderer2D_Null::getScissorRect() const
 	{
-		return Rect{ 0 };
+		return Rect::Empty();
 	}
 
 	void CRenderer2D_Null::setViewport(const Optional<Rect>&)

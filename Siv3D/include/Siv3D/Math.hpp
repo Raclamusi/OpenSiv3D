@@ -13,6 +13,7 @@
 # include <cmath>
 # include "Common.hpp"
 # include "PointVector.hpp"
+# include "PlaceHolder.hpp"
 
 namespace s3d
 {
@@ -1111,6 +1112,78 @@ namespace s3d
 
 		[[nodiscard]]
 		inline Vec4 Tanh(Vec4 v) noexcept;
+
+		//////////////////////////////////////////////////
+		//
+		//	Dot
+		//
+		//////////////////////////////////////////////////
+
+		[[nodiscard]]
+		inline constexpr float Dot(Float2 v1, Float2 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Dot(Float2 v1, Vec2 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Dot(Vec2 v1, Float2 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Dot(Vec2 v1, Vec2 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr float Dot(Float3 v1, Float3 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Dot(Vec3 v1, Float3 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Dot(Float3 v1, Vec3 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Dot(Vec3 v1, Vec3 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr float Dot(Float4 v1, Float4 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Dot(Vec4 v1, Float4 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Dot(Float4 v1, Vec4 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Dot(Vec4 v1, Vec4 v2) noexcept;
+
+		//////////////////////////////////////////////////
+		//
+		//	Cross
+		//
+		//////////////////////////////////////////////////
+
+		[[nodiscard]]
+		inline constexpr float Cross(Float2 v1, Float2 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Cross(Float2 v1, Vec2 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Cross(Vec2 v1, Float2 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr double Cross(Vec2 v1, Vec2 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr Float3 Cross(Float3 v1, Float3 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr Vec3 Cross(Float3 v1, Vec3 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr Vec3 Cross(Vec3 v1, Float3 v2) noexcept;
+
+		[[nodiscard]]
+		inline constexpr Vec3 Cross(Vec3 v1, Vec3 v2) noexcept;
 
 		//////////////////////////////////////////////////
 		//

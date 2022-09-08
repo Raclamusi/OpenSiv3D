@@ -14,10 +14,11 @@
 # include "Array.hpp"
 # include "Byte.hpp"
 # include "IReader.hpp"
-# include "MD5Value.hpp"
 
 namespace s3d
 {
+	struct MD5Value;
+
 	/// @brief バイナリデータ
 	class Blob
 	{
@@ -203,12 +204,10 @@ namespace s3d
 
 		/// @brief バイナリデータを Base64 エンコードし、dst に格納します。
 		/// @param dst エンコードされたデータの格納先
-		[[nodiscard]]
 		void base64(std::string& dst) const;
 
 		/// @brief バイナリデータを Base64 エンコードし、dst に格納します。
 		/// @param dst エンコードされたデータの格納先
-		[[nodiscard]]
 		void base64(String& dst) const;
 
 	private:

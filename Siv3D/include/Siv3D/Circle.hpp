@@ -49,76 +49,81 @@ namespace s3d
 		};
 
 		/// @brief 円の半径
+		/// @remark この値が負の時の挙動は未規定です。
 		size_type r;
 
 	SIV3D_DISABLE_MSVC_WARNINGS_POP()
 
-		/// @brief 
+		/// @brief デフォルトコンストラクタ
 		SIV3D_NODISCARD_CXX20
 		Circle() = default;
 
-		/// @brief 
-		/// @param _r 
+		/// @brief 中心が { 0, 0 } の円を作成します。
+		/// @param _r 円の半径
 		SIV3D_NODISCARD_CXX20
 		explicit constexpr Circle(size_type _r) noexcept;
 
+		/// @brief 中心が { 0, 0 } の円を作成します。
+		/// @param _r 円の半径
 		SIV3D_CONCEPT_ARITHMETIC
 		SIV3D_NODISCARD_CXX20
 		explicit constexpr Circle(Arithmetic _r) noexcept;
 
-		/// @brief 
-		/// @param _x 
-		/// @param _y 
-		/// @param _r 
+		/// @brief 円を作成します。
+		/// @param _x 円の中心の X 座標
+		/// @param _y 円の中心の Y 座標
+		/// @param _r 円の半径
 		SIV3D_NODISCARD_CXX20
 		constexpr Circle(value_type _x, value_type _y, size_type _r) noexcept;
 
-		/// @brief 
-		/// @tparam X 
-		/// @tparam Y 
-		/// @tparam R 
-		/// @param _x 
-		/// @param _y 
-		/// @param _r 
-		/// @return 
+		/// @brief 円を作成します。
+		/// @tparam X 引数の型
+		/// @tparam Y 引数の型
+		/// @tparam R 引数の型
+		/// @param _x 円の中心の X 座標
+		/// @param _y 円の中心の Y 座標
+		/// @param _r 円の半径
 		template <class X, class Y, class R>
 		SIV3D_NODISCARD_CXX20
 		constexpr Circle(X _x, Y _y, R _r) noexcept;
 
-		/// @brief 
-		/// @param _center 
-		/// @param _r 
+		/// @brief 円を作成します。
+		/// @param _center 円の中心座標
+		/// @param _r 円の半径
 		SIV3D_NODISCARD_CXX20
 		constexpr Circle(position_type _center, size_type _r) noexcept;
 
+		/// @brief 円を作成します。
+		/// @param _center 円の中心座標
+		/// @param _r 円の半径
 		SIV3D_CONCEPT_ARITHMETIC
 		SIV3D_NODISCARD_CXX20
 		constexpr Circle(position_type _center, Arithmetic _r) noexcept;
 
-		/// @brief 
-		/// @param _center 
-		/// @param _r 
+		/// @brief 円を作成します。
+		/// @param _center 円の中心座標
+		/// @param _r 円の半径
 		SIV3D_CONCEPT_ARITHMETIC
 		SIV3D_NODISCARD_CXX20
 		constexpr Circle(Arg::center_<position_type> _center, Arithmetic _r) noexcept;
 
-		/// @brief 
-		/// @param topLeft 
-		/// @param _r 
+		/// @brief 円を作成します。
+		/// @param topLeft 円に外接する正方形の左上の座標
+		/// @param _r 円の半径
 		SIV3D_CONCEPT_ARITHMETIC
 		SIV3D_NODISCARD_CXX20
 		constexpr Circle(Arg::topLeft_<position_type> topLeft, Arithmetic _r) noexcept;
 
-		/// @brief 
-		/// @param topCenter 
-		/// @param _r 
+		/// @brief 円を作成します。
+		/// @param topCenter 円に外接する正方形の上辺中心の座標
+		/// @param _r 円の半径
 		SIV3D_CONCEPT_ARITHMETIC
 		SIV3D_NODISCARD_CXX20
 		constexpr Circle(Arg::topCenter_<position_type> topCenter, Arithmetic _r) noexcept;
 
-		/// @brief 
-		/// @param topRight 
-		/// @param _r 
+		/// @brief 円を作成します。
+		/// @param topRight 円に外接する正方形の右上の座標
+		/// @param _r 円の半径
 		SIV3D_CONCEPT_ARITHMETIC
 		SIV3D_NODISCARD_CXX20
 		constexpr Circle(Arg::topRight_<position_type> topRight, Arithmetic _r) noexcept;
@@ -248,37 +253,73 @@ namespace s3d
 
 		constexpr Circle& setR(value_type _r) noexcept;
 
+		/// @brief 中心座標を移動した新しい円を返します。
+		/// @param _x X 軸方向の移動量
+		/// @param _y Y 軸方向の移動量
+		/// @return 新しい円
 		[[nodiscard]]
 		constexpr Circle movedBy(value_type _x, value_type _y) const noexcept;
 
+		/// @brief 中心座標を移動した新しい円を返します。
+		/// @param v 移動量
+		/// @return 新しい円
 		[[nodiscard]]
 		constexpr Circle movedBy(position_type v) const noexcept;
 
+		/// @brief 中心座標を移動させます。
+		/// @param _x X 軸方向の移動量
+		/// @param _y Y 軸方向の移動量
+		/// @return *this
 		constexpr Circle& moveBy(value_type _x, value_type _y) noexcept;
 
+		/// @brief 中心座標を移動させます。
+		/// @param v 移動量
+		/// @return *this
 		constexpr Circle& moveBy(position_type v) noexcept;
 
+		/// @brief 半径を変化させた新しい円を返します。
+		/// @param size 半径の変化量
+		/// @return 新しい円
 		[[nodiscard]]
 		constexpr Circle stretched(value_type size) const noexcept;
 
+		/// @brief X 軸、Y 軸上で径を変化させて楕円を作成します。
+		/// @param _x X 軸上の径の変化量
+		/// @param _y Y 軸上の径の変化量
+		/// @return 楕円
 		[[nodiscard]]
 		constexpr Ellipse stretched(double _x, double _y) const noexcept;
 
+		/// @brief 半径を拡大した新しい円を返します。
+		/// @param s 拡大倍率
+		/// @return 新しい円
 		[[nodiscard]]
 		constexpr Circle scaled(double s) const noexcept;
 
+		/// @brief X 軸、Y 軸上に拡大して楕円を作成します。
+		/// @param sx X 軸方向の拡大倍率
+		/// @param sy Y 軸方向の拡大倍率
+		/// @return 楕円
 		[[nodiscard]]
 		constexpr Ellipse scaled(double sx, double sy) const noexcept;
 
+		/// @brief 円周上で最も上にある点の座標を返します。
+		/// @return 最も上にある点の座標
 		[[nodiscard]]
 		constexpr position_type top() const noexcept;
 
+		/// @brief 円周上で最も右にある点の座標を返します。
+		/// @return 最も右にある点の座標
 		[[nodiscard]]
 		constexpr position_type right() const noexcept;
 
+		/// @brief 円周上で最も下にある点の座標を返します。
+		/// @return 最も下にある点の座標
 		[[nodiscard]]
 		constexpr position_type bottom() const noexcept;
 
+		/// @brief 円周上で最も左にある点の座標を返します。
+		/// @return 最も左にある点の座標
 		[[nodiscard]]
 		constexpr position_type left() const noexcept;
 
@@ -298,12 +339,20 @@ namespace s3d
 		[[nodiscard]]
 		constexpr value_type perimeter() const noexcept;
 
+		/// @brief 円に外接する正方形を返します。
+		/// @return 円に外接する正方形
 		[[nodiscard]]
 		constexpr RectF boundingRect() const noexcept;
 
+		/// @brief 円周上の点をラジアン (12 時方向が 0, 3 時方向が π/2, 6 時方向が π) で取得します。
+		/// @param angle 方向（ラジアン）
+		/// @return 円周上の点
 		[[nodiscard]]
 		position_type getPointByAngle(double angle) const noexcept;
 
+		/// @brief 円から Polygon を作成します。
+		/// @param quality 品質
+		/// @return Polygon
 		[[nodiscard]]
 		Polygon asPolygon(uint32 quality = 24) const;
 

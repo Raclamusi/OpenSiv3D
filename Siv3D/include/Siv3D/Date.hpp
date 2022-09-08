@@ -18,10 +18,12 @@
 # include "DayOfWeek.hpp"
 # include "String.hpp"
 # include "Duration.hpp"
-# include "FormatData.hpp"
+# include "FormatLiteral.hpp"
 
 namespace s3d
 {
+	struct FormatData;
+
 	/// @brief 日付 | Date
 	struct Date
 	{
@@ -252,10 +254,7 @@ namespace s3d
 		/// @brief 
 		/// @param formatData 
 		/// @param value 
-		friend void Formatter(FormatData& formatData, const Date& value)
-		{
-			formatData.string.append(value.format());
-		}
+		friend void Formatter(FormatData& formatData, const Date& value);
 	};
 
 	/// @brief 日付を文字列に変換します。
@@ -276,6 +275,34 @@ namespace s3d
 	[[nodiscard]]
 	String FormatDate(const Date& date, StringView format = U"yyyy-MM-dd"_sv);
 }
+
+template <>
+struct SIV3D_HIDDEN fmt::formatter<s3d::Date, s3d::char32>
+{
+	std::u32string tag;
+
+	auto parse(basic_format_parse_context<s3d::char32>& ctx)
+	{
+		return s3d::detail::GetFormatTag(tag, ctx);
+	}
+
+	template <class FormatContext>
+	auto format(const s3d::Date& value, FormatContext& ctx)
+	{
+		const s3d::String dateTime = value.format();
+		const basic_string_view<s3d::char32> sv(dateTime.data(), dateTime.size());
+
+		if (tag.empty())
+		{
+			return format_to(ctx.out(), U"{}", sv);
+		}
+		else
+		{
+			const std::u32string format = (U"{:" + tag + U'}');
+			return format_to(ctx.out(), format, sv);
+		}
+	}
+};
 
 //////////////////////////////////////////////////
 //

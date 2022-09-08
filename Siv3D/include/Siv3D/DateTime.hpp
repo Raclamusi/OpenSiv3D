@@ -216,10 +216,7 @@ namespace s3d
 			return output << value.format();
 		}
 
-		friend void Formatter(FormatData& formatData, const DateTime& value)
-		{
-			formatData.string.append(value.format());
-		}
+		friend void Formatter(FormatData& formatData, const DateTime& value);
 	};
 
 	/// @brief 日付と時刻を文字列に変換します。
@@ -250,6 +247,34 @@ namespace s3d
 	[[nodiscard]]
 	String FormatDateTime(const DateTime& dateTime, StringView format = U"yyyy-MM-dd HH:mm:ss"_sv);
 }
+
+template <>
+struct SIV3D_HIDDEN fmt::formatter<s3d::DateTime, s3d::char32>
+{
+	std::u32string tag;
+
+	auto parse(basic_format_parse_context<s3d::char32>& ctx)
+	{
+		return s3d::detail::GetFormatTag(tag, ctx);
+	}
+
+	template <class FormatContext>
+	auto format(const s3d::DateTime& value, FormatContext& ctx)
+	{
+		const s3d::String dateTime = value.format();
+		const basic_string_view<s3d::char32> sv(dateTime.data(), dateTime.size());
+
+		if (tag.empty())
+		{
+			return format_to(ctx.out(), U"{}", sv);
+		}
+		else
+		{
+			const std::u32string format = (U"{:" + tag + U'}');
+			return format_to(ctx.out(), format, sv);
+		}
+	}
+};
 
 //////////////////////////////////////////////////
 //

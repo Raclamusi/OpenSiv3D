@@ -17,11 +17,11 @@
 
 namespace s3d
 {
-	/// @brief 
-	/// @tparam Type 
-	/// @param value 
-	/// @param padding 
-	/// @return 
+	/// @brief 値を文字列に変換し、指定した文字数に満たない場合は埋め文字で埋めます。
+	/// @tparam Type 変換する値の型
+	/// @param value 変換する値
+	/// @param padding 文字数と埋め文字のペア
+	/// @return 変換した結果
 	template <class Type>
 	[[nodiscard]]
 	inline String Pad(const Type& value, std::pair<int32, char32> padding);
@@ -51,6 +51,12 @@ namespace s3d
 	SIV3D_CONCEPT_FLOATING_POINT_
 	[[nodiscard]]
 	inline String ThousandsSeparate(Float value, int32 decimalPlace = 3, Fixed fixed = Fixed::No, StringView separator = U","_sv);
+
+	/// @brief 文字列をパーセントエンコーディングした結果を返します。
+	/// @param s 変換する文字列
+	/// @return 変換した結果
+	[[nodiscard]]
+	String PercentEncode(StringView s);
 }
 
 # include "detail/FormatUtility.ipp"

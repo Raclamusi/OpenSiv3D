@@ -1,6 +1,6 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name>OpenSiv3D(0.6.4)Web</Name>
+    <Name>OpenSiv3D(0.6.5)Web</Name>
     <Description>A project for creating a Siv3D application</Description>
     <ProjectType>VC</ProjectType>
     <LanguageTag>cpp</LanguageTag>
@@ -227,6 +227,7 @@
       <ProjectItem ReplaceParameters="false" TargetFileName="32.png">resources/engine/texture/box-shadow/32.png</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="64.png">resources/engine/texture/box-shadow/64.png</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="8.png">resources/engine/texture/box-shadow/8.png</ProjectItem>
+
       <ProjectItem ReplaceParameters="false" TargetFileName="web-player.html">Templates\Embeddable\web-player.html</ProjectItem>
       <ProjectItem ReplaceParameters="false" TargetFileName="web-player.js">Templates\Embeddable\web-player.js</ProjectItem>
     </Project>

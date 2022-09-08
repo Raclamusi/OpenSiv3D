@@ -13,6 +13,25 @@
 
 namespace s3d
 {
+	namespace detail
+	{
+		template <class Type>
+		class StableUniqueHelper
+		{
+		private:
+
+			std::unordered_set<Type> m_set;
+
+		public:
+
+			[[nodiscard]]
+			bool operator()(const Type& value)
+			{
+				return m_set.insert(value).second;
+			}
+		};
+	}
+
 	template <class Type, class Allocator>
 	inline Array<Type, Allocator>::Array(const container_type& other)
 		: m_container(other) {}
@@ -318,9 +337,9 @@ namespace s3d
 	}
 
 	template <class Type, class Allocator>
-	inline void Array<Type, Allocator>::reserve(const size_type new_cap)
+	inline void Array<Type, Allocator>::reserve(const size_type n)
 	{
-		m_container.reserve(new_cap);
+		m_container.reserve(n);
 	}
 
 	template<class Type, class Allocator>
@@ -557,7 +576,7 @@ namespace s3d
 			throw std::out_of_range{ "Array::choice(): Array is empty" };
 		}
 
-		return m_container[RandomClosedOpen<size_t>(0, size)];
+		return m_container[RandomClosedOpen<size_t>(0, size, std::forward<URBG>(rbg))];
 	}
 
 	template <class Type, class Allocator>
@@ -571,7 +590,7 @@ namespace s3d
 			throw std::out_of_range{ "Array::choice(): Array is empty" };
 		}
 
-		return m_container[RandomClosedOpen<size_t>(0, size)];
+		return m_container[RandomClosedOpen<size_t>(0, size, std::forward<URBG>(rbg))];
 	}
 
 	template <class Type, class Allocator>
@@ -817,6 +836,13 @@ namespace s3d
 	inline bool Array<Type, Allocator>::none(Fty f) const
 	{
 		return std::none_of(begin(), end(), f);
+	}
+
+	template <class Type, class Allocator>
+	template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, Type>>*>
+	auto Array<Type, Allocator>::partition(Fty f)
+	{
+		return std::partition(begin(), end(), f);
 	}
 
 	template <class Type, class Allocator>
@@ -1265,6 +1291,13 @@ namespace s3d
 	inline Array<Type, Allocator> Array<Type, Allocator>::sorted() const&
 	{
 		return Array(*this).sort();
+	}
+
+	template <class Type, class Allocator>
+	template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, Type>>*>
+	auto Array<Type, Allocator>::stable_partition(Fty f)
+	{
+		return std::stable_partition(begin(), end(), f);
 	}
 
 	template <class Type, class Allocator>
