@@ -12,6 +12,7 @@
 # include <Siv3D/Common.hpp>
 # include <Siv3D/EngineLog.hpp>
 # include <Siv3D/FileSystem.hpp>
+# include <Siv3D/BinaryReader.hpp>
 # include "AsyncHTTPTaskDetail.hpp"
 
 # include <emscripten/emscripten.h>
@@ -62,6 +63,7 @@ namespace s3d
 			auto& httpTask = *static_cast<AsyncHTTPTaskDetail*>(userData);
 
 			httpTask.setStatus(HTTPAsyncStatus::Succeeded);
+			httpTask.writeRequestsToMemory();
 			httpTask.resolveResponse(response);
 
 			EM_ASM("setTimeout(function() { _siv3dMaybeAwake(); }, 0)");
@@ -75,6 +77,7 @@ namespace s3d
 			auto& httpTask = *static_cast<AsyncHTTPTaskDetail*>(userData);
 
 			httpTask.setStatus(HTTPAsyncStatus::Failed);
+			httpTask.removeFile();
 			httpTask.resolveResponse(response);
 
 			EM_ASM("setTimeout(function() { _siv3dMaybeAwake(); }, 0)");
@@ -86,20 +89,66 @@ namespace s3d
 
 			httpTask.updateProgress(dlTotal, dlNow, 0, 0);
 		}
+
+		static void CopyFileToMemoryWriter(const StringView path, MemoryWriter& writer)
+		{
+			BinaryReader temporaryFileReader{ path };
+
+			Array<Byte> buffer;
+			buffer.resize(4096);
+
+			while (true)
+			{
+				auto size = temporaryFileReader.read(buffer.data(), buffer.size());
+
+				if (size == 0)
+				{
+					break;
+				}
+
+				writer.write(buffer.data(), size);
+			}
+		}
 	}
 
 	AsyncHTTPTaskDetail::AsyncHTTPTaskDetail() {}
 
-	AsyncHTTPTaskDetail::AsyncHTTPTaskDetail(URLView url, FilePathView path)
-		: AsyncHTTPTaskDetail(U"GET", url, path) {}
+	AsyncHTTPTaskDetail::AsyncHTTPTaskDetail(URLView url, const HashTable<String, String>& headers, FilePathView path)
+		: AsyncHTTPTaskDetail(U"GET", url, headers, path) {}
 
-	AsyncHTTPTaskDetail::AsyncHTTPTaskDetail(StringView method, URLView url, FilePathView path)
+	AsyncHTTPTaskDetail::AsyncHTTPTaskDetail(URLView url, const HashTable<String, String>& headers)
+		: AsyncHTTPTaskDetail(U"GET", url, headers) {}
+
+	AsyncHTTPTaskDetail::AsyncHTTPTaskDetail(StringView method, URLView url, const HashTable<String, String>& headers, FilePathView path)
 		: m_url{ url }
+		, m_path{ FileSystem::FullPath(path) }
+		, m_isFile{ true }
 	{
 		m_wgetHandle = detail::siv3dCreateXMLHTTPRequest();
 
 		detail::siv3dOpenXMLHTTPRequest(m_wgetHandle, method.toUTF8().data(), url.toUTF8().data());
 		detail::siv3dSetXMLHTTPRequestWriteBackFile(m_wgetHandle, path.toUTF8().data());
+
+		for (auto&& [key, value] : headers)
+		{
+			setRequestHeader(key, value);
+		}
+	}
+
+	AsyncHTTPTaskDetail::AsyncHTTPTaskDetail(StringView method, URLView url, const HashTable<String, String>& headers)
+		: m_url{ url }
+		, m_path{}
+		, m_isFile{ false }
+	{
+		m_wgetHandle = detail::siv3dCreateXMLHTTPRequest();
+
+		detail::siv3dOpenXMLHTTPRequest(m_wgetHandle, method.toUTF8().data(), url.toUTF8().data());
+		detail::siv3dSetXMLHTTPRequestWriteBackFile(m_wgetHandle, "/tmp/file");
+
+		for (auto&& [key, value] : headers)
+		{
+			setRequestHeader(key, value);
+		}
 	}
 
 	AsyncHTTPTaskDetail::~AsyncHTTPTaskDetail()
@@ -145,6 +194,39 @@ namespace s3d
 		}
 
 		return m_response;
+	}
+
+	bool AsyncHTTPTaskDetail::isFile() const
+	{
+		return m_isFile;
+	}
+
+	const FilePath& AsyncHTTPTaskDetail::getFilePath() const
+	{
+		return m_path;
+	}
+
+	const Blob& AsyncHTTPTaskDetail::getBlob() const
+	{
+		return m_memory.getBlob();
+	}
+
+	void AsyncHTTPTaskDetail::writeRequestsToMemory()
+	{
+		if (not m_isFile)
+		{
+			detail::CopyFileToMemoryWriter(U"/tmp/file", m_memory);
+			FileSystem::Remove(U"/tmp/file");
+		}
+	}
+
+	void AsyncHTTPTaskDetail::removeFile()
+	{
+		if (m_path)
+		{
+			FileSystem::Remove(m_path);
+			m_path.clear();
+		}
 	}
 
 	void AsyncHTTPTaskDetail::resolveResponse(const HTTPResponse& response)

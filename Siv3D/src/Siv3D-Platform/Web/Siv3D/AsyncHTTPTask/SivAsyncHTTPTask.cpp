@@ -11,6 +11,8 @@
 
 # include <Siv3D/Common.hpp>
 # include <Siv3D/AsyncHTTPTask.hpp>
+# include <Siv3D/MemoryViewReader.hpp>
+# include <Siv3D/JSON.hpp>
 # include "AsyncHTTPTaskDetail.hpp"
 
 namespace s3d
@@ -74,10 +76,67 @@ namespace s3d
 		return pImpl->getResponse();
 	}
 
-	AsyncHTTPTask::AsyncHTTPTask(const URLView url, const FilePathView path)
-		: pImpl{ std::make_shared<AsyncHTTPTaskDetail>(url, path) } 
+	bool AsyncHTTPTask::isFile() const
+	{
+		return pImpl->isFile();
+	}
+
+	bool AsyncHTTPTask::isBlob() const
+	{
+		return (not pImpl->isFile());
+	}
+
+	const FilePath& AsyncHTTPTask::getFilePath() const
+	{
+		return pImpl->getFilePath();
+	}
+
+	const Blob& AsyncHTTPTask::getBlob() const
+	{
+		return pImpl->getBlob();
+	}
+
+	MemoryViewReader AsyncHTTPTask::getBlobReader() const
+	{
+		const Blob& blob = pImpl->getBlob();
+
+		return{ blob.data(), blob.size_bytes() };
+	}
+
+	JSON AsyncHTTPTask::getAsJSON() const
+	{
+		if (pImpl->isFile())
+		{
+			return JSON::Load(getFilePath());
+		}
+		else
+		{
+			return JSON::Load(getBlobReader());
+		}
+	}
+
+	AsyncHTTPTask::AsyncHTTPTask(const URLView url, const HashTable<String, String>& headers, const FilePathView path)
+		: pImpl{ std::make_shared<AsyncHTTPTaskDetail>(url, headers, path) }
 	{
 		pImpl->send(none);
+	}
+
+	AsyncHTTPTask::AsyncHTTPTask(const URLView url, const HashTable<String, String>& headers)
+		: pImpl{ std::make_shared<AsyncHTTPTaskDetail>(url, headers) }
+	{
+		pImpl->send(none);
+	}
+
+	AsyncHTTPTask::AsyncHTTPTask(const URLView url, const HashTable<String, String>& headers, const void* src, const size_t size, const FilePathView path)
+		: pImpl{ std::make_shared<AsyncHTTPTaskDetail>(U"POST", url, headers, path) }
+	{
+		pImpl->send(std::string_view(static_cast<const char*>(src), size));
+	}
+
+	AsyncHTTPTask::AsyncHTTPTask(const URLView url, const HashTable<String, String>& headers, const void* src, const size_t size)
+		: pImpl{ std::make_shared<AsyncHTTPTaskDetail>(U"POST", url, headers) }
+	{
+		pImpl->send(std::string_view(static_cast<const char*>(src), size));
 	}
 
 	namespace Platform::Web::SimpleHTTP
