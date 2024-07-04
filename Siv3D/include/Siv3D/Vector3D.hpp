@@ -168,6 +168,24 @@ namespace s3d
 		/// @brief 各成分を 0 にセットします。
 		constexpr void clear() noexcept;
 
+		/// @brief x 成分のみを変更した自身のコピーを返します。
+		/// @param _x x 成分
+		/// @return x 成分を変更したコピー
+		[[nodiscard]]
+		constexpr Vector3D withX(value_type _x) const noexcept;
+
+		/// @brief y 成分のみを変更した自身のコピーを返します。
+		/// @param _y y 成分
+		/// @return y 成分を変更したコピー
+		[[nodiscard]]
+		constexpr Vector3D withY(value_type _y) const noexcept;
+
+		/// @brief z 成分のみを変更した自身のコピーを返します。
+		/// @param _z z 成分
+		/// @return z 成分を変更したコピー
+		[[nodiscard]]
+		constexpr Vector3D withZ(value_type _z) const noexcept;
+
 		/// @brief 各成分を変更します。
 		/// @param _x 新しい X 成分
 		/// @param _y 新しい Y 成分
@@ -306,6 +324,12 @@ namespace s3d
 		/// @brief 自身を正規化（大きさを 1 に）します。
 		/// @return *this
 		Vector3D& normalize() noexcept;
+
+		/// @brief 正規化した（大きさを 1 にした）ベクトルを返します。ゼロベクトルの場合は valueIfZero を返します。
+		/// @param valueIfZero ゼロベクトルの場合に返すベクトル
+		/// @return 正規化した（大きさを 1 にした）ベクトル、または valueIfZero
+		[[nodiscard]]
+		Vector3D normalized_or(Vector3D valueIfZero) const noexcept;
 
 		[[nodiscard]]
 		constexpr Vector3D getMidpoint(Vector3D other) const noexcept;

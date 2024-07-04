@@ -72,8 +72,11 @@ namespace s3d
 				return true;
 			}
 
+			const FilePath fullPath = FileSystem::FullPath(defaultPath);
+			const std::wstring nativePath = FileSystem::NativePath(fullPath);
+
 			ComPtr<IShellItem> folder;
-			HRESULT result = ::SHCreateItemFromParsingName(String{ defaultPath }.replaced(U'/', U'\\').toWstr().c_str(), nullptr, IID_PPV_ARGS(folder.GetAddressOf()));
+			HRESULT result = ::SHCreateItemFromParsingName(nativePath.c_str(), nullptr, IID_PPV_ARGS(folder.GetAddressOf()));
 
 			if (result == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)
 				|| result == HRESULT_FROM_WIN32(ERROR_INVALID_DRIVE))
@@ -251,7 +254,7 @@ namespace s3d
 			}
 		}
 
-		Optional<FilePath> SaveFile(const Array<FileFilter>& filters, const FilePathView defaultPath, const StringView title)
+		Optional<FilePath> SaveFile(const Array<FileFilter>& filters, const FilePathView defaultPath, const StringView title, const StringView defaultFileName)
 		{
 			ComPtr<IFileSaveDialog> fileSaveDialog;
 
@@ -278,6 +281,11 @@ namespace s3d
 
 			// Append file extension
 			fileSaveDialog->SetDefaultExtension(L"");
+
+			if (defaultFileName)
+			{
+				fileSaveDialog->SetFileName(defaultFileName.toWstr().c_str());
+			}
 
 			if (HRESULT result = fileSaveDialog->Show(static_cast<HWND>(SIV3D_ENGINE(Window)->getHandle()));
 				SUCCEEDED(result))

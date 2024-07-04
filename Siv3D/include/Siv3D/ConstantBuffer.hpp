@@ -28,9 +28,6 @@ namespace s3d
 		ConstantBufferBase() = default;
 
 		SIV3D_NODISCARD_CXX20
-		ConstantBufferBase(const ConstantBufferBase&) = default;
-
-		SIV3D_NODISCARD_CXX20
 		explicit ConstantBufferBase(size_t size);
 
 		bool _internal_update(const void* data, size_t size);
@@ -77,7 +74,9 @@ namespace s3d
 		SIV3D_NODISCARD_CXX20
 		ConstantBuffer(const Type& data);
 
-		~ConstantBuffer();
+		template <class ...Args, std::enable_if_t<std::is_constructible_v<Type, Args...>>* = nullptr>
+		SIV3D_NODISCARD_CXX20
+		explicit ConstantBuffer(Args&&... args);
 
 		ConstantBuffer& operator =(const Type& data);
 
@@ -117,7 +116,15 @@ namespace s3d
 
 		ConstantBufferBase m_base;
 
-		WrapperType* const m_wrapper = AlignedNew<WrapperType>();
+		struct Deleter
+		{
+			void operator()(WrapperType* p) const
+			{
+				AlignedDelete<WrapperType>(p);
+			}
+		};
+
+		std::unique_ptr<WrapperType, Deleter> m_wrapper{ AlignedNew<WrapperType>() };
 
 		bool m_hasDirty = true;
 	};

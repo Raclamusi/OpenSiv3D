@@ -49,13 +49,15 @@ namespace s3d
 
 		Array<DroppedText> getDroppedText() override;
 
-		void makeDragDrop(FilePathView path) override;
+		void makeDragDrop(const Array<FilePath>& paths) override;
 
 		void process();
 
 	private:
 
 		HWND m_hWnd = nullptr;
+
+		bool m_initialized = false;
 
 		detail::DropTarget* m_pDropTarget = nullptr;
 
@@ -73,7 +75,7 @@ namespace s3d
 		//
 		std::mutex m_mutex;
 
-		FilePath m_newDragPath;
+		Array<FilePath> m_newDragPaths;
 		//
 		//////////
 	};

@@ -11,11 +11,14 @@
 
 # include <Siv3D/Shader.hpp>
 # include <Siv3D/TextureRegion.hpp>
+# include <Siv3D/TexturedQuad.hpp>
 # include <Siv3D/Shader/IShader.hpp>
 # include <Siv3D/Common/Siv3DEngine.hpp>
 # include <Siv3D/ScopedCustomShader2D.hpp>
 # include <Siv3D/ScopedRenderTarget2D.hpp>
 # include <Siv3D/ScopedRenderStates2D.hpp>
+# include <Siv3D/Mat3x3.hpp>
+# include "EngineShader.hpp"
 
 namespace s3d
 {
@@ -72,17 +75,17 @@ namespace s3d
 			from.resized(to.size()).draw();
 		}
 
-		void GaussianBlurH(const TextureRegion& from, const RenderTexture& to)
+		void GaussianBlurH(const TextureRegion& from, const RenderTexture& to, const BoxFilterSize boxFilterSize)
 		{
-			GaussianBlur(from, to, Vec2{ 1, 0 });
+			GaussianBlur(from, to, Vec2{ 1, 0 }, boxFilterSize);
 		}
 
-		void GaussianBlurV(const TextureRegion& from, const RenderTexture& to)
+		void GaussianBlurV(const TextureRegion& from, const RenderTexture& to, const BoxFilterSize boxFilterSize)
 		{
-			GaussianBlur(from, to, Vec2{ 0, 1 });
+			GaussianBlur(from, to, Vec2{ 0, 1 }, boxFilterSize);
 		}
 
-		void GaussianBlur(const TextureRegion& from, const RenderTexture& to, const Vec2& direction)
+		void GaussianBlur(const TextureRegion& from, const RenderTexture& to, const Vec2& direction, const BoxFilterSize boxFilterSize)
 		{
 			if (not from.texture)
 			{
@@ -106,15 +109,19 @@ namespace s3d
 
 			const ScopedRenderTarget2D target{ to };
 			const ScopedRenderStates2D states{ BlendState::Opaque, SamplerState::ClampLinear, RasterizerState::Default2D };
-			const ScopedCustomShader2D shader{ SIV3D_ENGINE(Shader)->getEnginePS(EnginePS::GaussianBlur_9) };
+			const EnginePS ps =
+				(boxFilterSize == BoxFilterSize::BoxFilter5x5) ? EnginePS::GaussianBlur_5
+				: (boxFilterSize == BoxFilterSize::BoxFilter9x9) ? EnginePS::GaussianBlur_9
+				: EnginePS::GaussianBlur_13;
+			const ScopedCustomShader2D shader{ SIV3D_ENGINE(Shader)->getEnginePS(ps) };
 			Graphics2D::Internal::SetInternalPSConstants(Float4{ Float2{ 1, 1 } / from.size * Float2{ from.uvRect.right - from.uvRect.left, from.uvRect.bottom - from.uvRect.top }, direction });
 			from.draw();
 		}
 
-		void GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to)
+		void GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to, const BoxFilterSize boxFilterSize)
 		{
-			Shader::GaussianBlurH(from, internalBuffer);
-			Shader::GaussianBlurV(internalBuffer, to);
+			Shader::GaussianBlurH(from, internalBuffer, boxFilterSize);
+			Shader::GaussianBlurV(internalBuffer, to, boxFilterSize);
 		}
 
 		void LinearToScreen(const TextureRegion& src, const TextureFilter textureFilter, const RectF& dst)
@@ -148,6 +155,30 @@ namespace s3d
 			}
 			
 			Graphics2D::Flush();
+		}
+
+		void QuadWarp(const Quad& quad, const TextureRegion& texture)
+		{
+			// ConstantBuffer の設定
+			{
+				const Mat3x3 mat = Mat3x3::Homography(quad);
+				const Mat3x3 matInv = mat.inverse();
+
+				VS2DQuadWarp vsCB;
+				vsCB.homography = { Float4{ mat._11_12_13, 0 }, Float4{ mat._21_22_23, 0 }, Float4{ mat._31_32_33, 0 } };
+
+				PS2DQuadWarp psCB;
+				psCB.invHomography = { Float4{ matInv._11_12_13, 0 }, Float4{ matInv._21_22_23, 0 }, Float4{ matInv._31_32_33, 0 } };
+				psCB.uvTransform = Float4{ (texture.uvRect.right - texture.uvRect.left), (texture.uvRect.bottom - texture.uvRect.top), texture.uvRect.left, texture.uvRect.top };
+
+				SIV3D_ENGINE(Shader)->setQuadWarpCB(vsCB, psCB);
+			}
+
+			// シェーダを使用して描画
+			{
+				const ScopedCustomShader2D shader{ SIV3D_ENGINE(Shader)->getEngineVS(EngineVS::QuadWarp), SIV3D_ENGINE(Shader)->getEnginePS(EnginePS::QuadWarp) };
+				Rect{ 1 }(texture.texture).draw();
+			}
 		}
 	}
 }

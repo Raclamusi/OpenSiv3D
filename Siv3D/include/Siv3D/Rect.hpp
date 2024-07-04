@@ -496,15 +496,31 @@ namespace s3d
 		/// @return *this
 		constexpr Rect& moveBy(size_type v) noexcept;
 
+		/// @brief 左右・上下方向に拡大縮小した長方形を返します。
+		/// @param xy 左方向・右方向・上方向・下方向のそれぞれの拡大縮小量
+		/// @return 左右・上下方向に拡大縮小した長方形
 		[[nodiscard]]
 		constexpr Rect stretched(value_type xy) const noexcept;
 
+		/// @brief 左右・上下方向に拡大縮小した長方形を返します。
+		/// @param _x 左方向と右方向のそれぞれの拡大縮小量
+		/// @param _y 上方向と下方向のそれぞれの拡大縮小量
+		/// @return 左右・上下方向に拡大縮小した長方形
 		[[nodiscard]]
 		constexpr Rect stretched(value_type _x, value_type _y) const noexcept;
 
+		/// @brief 左右・上下方向に拡大縮小した長方形を返します。
+		/// @param xy 左方向と右方向・上方向と下方向のそれぞれの拡大縮小量
+		/// @return 左右・上下方向に拡大縮小した長方形
 		[[nodiscard]]
 		constexpr Rect stretched(size_type xy) const noexcept;
 
+		/// @brief 上下左右方向に拡大縮小した長方形を返します。
+		/// @param top 上方向の拡大縮小量
+		/// @param right 右方向の拡大縮小量
+		/// @param bottom 下方向の拡大縮小量
+		/// @param left 左方向の拡大縮小量
+		/// @return 上下左右方向に拡大縮小した長方形
 		[[nodiscard]]
 		constexpr Rect stretched(value_type top, value_type right, value_type bottom, value_type left) const noexcept;
 
@@ -675,6 +691,19 @@ namespace s3d
 
 		[[nodiscard]]
 		Quad rotatedAt(Vec2 _pos, double angle) const noexcept;
+
+		/// @brief _posを中心とし、時計回りに 90°* n 回転した長方形を返します。
+		/// @param _pos 回転の中心座標
+		/// @param n 時計回りに 90° 回転させる回数（負の場合は反時計回り）
+		/// @return _posを中心とし、時計回りに 90°* n 回転した長方形
+		[[nodiscard]]
+		constexpr Rect rotated90At(const position_type& _pos, int32 n = 1) const noexcept;
+
+		/// @brief _posを中心とし、自身を時計回りに 90°* n 回転します。
+		/// @param _pos 回転の中心座標
+		/// @param n 時計回りに 90° 回転させる回数（負の場合は反時計回り）
+		/// @return *this
+		constexpr Rect& rotate90At(const position_type& _pos, int32 n = 1) noexcept;
 
 		[[nodiscard]]
 		constexpr Quad shearedX(double vx) const noexcept;

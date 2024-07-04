@@ -24,6 +24,7 @@
     <ClInclude Include="..\Siv3D\include\Siv3D\AnimatedGIFWriter.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\ArcEmitter2D.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\BasicCamera3D.hpp" />
+    <ClInclude Include="..\Siv3D\include\Siv3D\BoxFilterSize.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\CircleEmitter2D.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\ColorOption.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\Cone.hpp" />
@@ -485,6 +486,11 @@
     <ClInclude Include="..\Siv3D\include\Siv3D\Noise.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\NormalComputation.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\OpenAI.hpp" />
+    <ClInclude Include="..\Siv3D\include\Siv3D\OpenAI\Chat.hpp" />
+    <ClInclude Include="..\Siv3D\include\Siv3D\OpenAI\Embedding.hpp" />
+    <ClInclude Include="..\Siv3D\include\Siv3D\OpenAI\Image.hpp" />
+    <ClInclude Include="..\Siv3D\include\Siv3D\OpenAI\Speech.hpp" />
+    <ClInclude Include="..\Siv3D\include\Siv3D\OpenAI\Vision.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\OrientedBox.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\Obfuscation.hpp" />
     <ClInclude Include="..\Siv3D\include\Siv3D\OffsetCircular.hpp" />
@@ -1172,6 +1178,7 @@
     <ClInclude Include="..\Siv3D\src\Siv3D\Network\CNetwork.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\Network\INetwork.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\NinePatch\NinePatchDetail.hpp" />
+    <ClInclude Include="..\Siv3D\src\Siv3D\OpenAI\OpenAICommon.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\OSCMessage\OSCMessageDetail.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\OSCReceiver\OSCPacketListener.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\OSCReceiver\OSCReceiverDetail.hpp" />
@@ -1228,6 +1235,7 @@
     <ClInclude Include="..\Siv3D\src\Siv3D\Script\ScriptData.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\Script\IScript.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\Serial\SerialDetail.hpp" />
+    <ClInclude Include="..\Siv3D\src\Siv3D\Shader\EngineShader.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\Shader\IShader.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\Shader\Null\CShader_Null.hpp" />
     <ClInclude Include="..\Siv3D\src\Siv3D\SoundFont\CSoundFont.hpp" />
@@ -1423,16 +1431,14 @@
     <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\bignum.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\cached-powers.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\diy-fp.h" />
-    <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\double-conversion.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\double-to-string.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\fast-dtoa.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\fixed-dtoa.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\ieee.h" />
-    <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\string-to-double.h" />
-    <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\strtod.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\double-conversion\utils.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\Earcut\earcut.hpp" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\easyexif\exif.h" />
+    <ClInclude Include="..\Siv3D\src\ThirdParty\fast_float\fast_float.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\fmt\format-inl.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\freetype\freetype\config\ftconfig.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\freetype\freetype\config\ftheader.h" />
@@ -1685,12 +1691,12 @@
     <ClInclude Include="..\Siv3D\src\ThirdParty\par_octasphere\par_octasphere.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\par_shapes\par_shapes.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\pffft\pffft.h" />
+    <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-ft-math.h" />
+    <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-ft-raster.h" />
+    <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-ft-stroker.h" />
+    <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-ft-types.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-private.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\plutovg.h" />
-    <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\sw_ft_math.h" />
-    <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\sw_ft_raster.h" />
-    <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\sw_ft_stroker.h" />
-    <ClInclude Include="..\Siv3D\src\ThirdParty\plutovg\sw_ft_types.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\qr-code-generator-library\qrcodegen.hpp" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\quirc\quirc.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\quirc\quirc_internal.h" />
@@ -2000,6 +2006,8 @@
     <ClInclude Include="..\Siv3D\src\ThirdParty\xxHash\xxhash.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\zlib\zconf.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\zlib\zlib.h" />
+    <ClInclude Include="..\Siv3D\src\ThirdParty\zstd\common\allocations.h" />
+    <ClInclude Include="..\Siv3D\src\ThirdParty\zstd\common\bits.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\zstd\common\bitstream.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\zstd\common\compiler.h" />
     <ClInclude Include="..\Siv3D\src\ThirdParty\zstd\common\cpu.h" />
@@ -2397,7 +2405,12 @@
     <ClCompile Include="..\Siv3D\src\Siv3D\NinePatch\NinePatchDetail.cpp" />
     <ClCompile Include="..\Siv3D\src\Siv3D\NinePatch\SivNinePatch.cpp" />
     <ClCompile Include="..\Siv3D\src\Siv3D\None\SivNone.cpp" />
-    <ClCompile Include="..\Siv3D\src\Siv3D\OpenAI\SivOpenAI.cpp" />
+    <ClCompile Include="..\Siv3D\src\Siv3D\OpenAI\OpenAICommon.cpp" />
+    <ClCompile Include="..\Siv3D\src\Siv3D\OpenAI\SivOpenAIChat.cpp" />
+    <ClCompile Include="..\Siv3D\src\Siv3D\OpenAI\SivOpenAIEmbedding.cpp" />
+    <ClCompile Include="..\Siv3D\src\Siv3D\OpenAI\SivOpenAIImage.cpp" />
+    <ClCompile Include="..\Siv3D\src\Siv3D\OpenAI\SivOpenAISpeech.cpp" />
+    <ClCompile Include="..\Siv3D\src\Siv3D\OpenAI\SivOpenAIVision.cpp" />
     <ClCompile Include="..\Siv3D\src\Siv3D\OpenCV_Bridge\SivOpenCV_Bridge.cpp" />
     <ClCompile Include="..\Siv3D\src\Siv3D\OrientedBox\SivOrientedBox.cpp" />
     <ClCompile Include="..\Siv3D\src\Siv3D\OSCMessage\OSCMessageDetail.cpp" />
@@ -2846,11 +2859,6 @@
     <ClCompile Include="..\Siv3D\src\ThirdParty\double-conversion\double-to-string.cc" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\double-conversion\fast-dtoa.cc" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\double-conversion\fixed-dtoa.cc" />
-    <ClCompile Include="..\Siv3D\src\ThirdParty\double-conversion\string-to-double.cc">
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4244;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-    </ClCompile>
-    <ClCompile Include="..\Siv3D\src\ThirdParty\double-conversion\strtod.cc" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\easyexif\exif.cpp" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\fmt\format.cc" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\infoware\src\cpu\architecture\architecture_non_windows.cpp" />
@@ -3004,13 +3012,13 @@
     <ClCompile Include="..\Siv3D\src\ThirdParty\pffft\pffft.c" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-blend.c" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-dash.c" />
+    <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-ft-math.c" />
+    <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-ft-raster.c" />
+    <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-ft-stroker.c" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-geometry.c" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-paint.c" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\plutovg-rle.c" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\plutovg.c" />
-    <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\sw_ft_math.c" />
-    <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\sw_ft_raster.c" />
-    <ClCompile Include="..\Siv3D\src\ThirdParty\plutovg\sw_ft_stroker.c" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\qr-code-generator-library\qrcodegen.cpp" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\quirc\decode.c" />
     <ClCompile Include="..\Siv3D\src\ThirdParty\quirc\identify.c" />

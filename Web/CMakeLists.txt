@@ -731,8 +731,6 @@ set(SIV3D_THIRDPARTY_SOURCES
   ../Siv3D/src/ThirdParty/double-conversion/double-to-string.cc
   ../Siv3D/src/ThirdParty/double-conversion/fast-dtoa.cc
   ../Siv3D/src/ThirdParty/double-conversion/fixed-dtoa.cc
-  ../Siv3D/src/ThirdParty/double-conversion/string-to-double.cc
-  ../Siv3D/src/ThirdParty/double-conversion/strtod.cc
 
   ../Siv3D/src/ThirdParty/easyexif/exif.cpp
 
@@ -904,9 +902,9 @@ set(SIV3D_THIRDPARTY_SOURCES
   ../Siv3D/src/ThirdParty/plutovg/plutovg-paint.c
   ../Siv3D/src/ThirdParty/plutovg/plutovg-rle.c
   ../Siv3D/src/ThirdParty/plutovg/plutovg.c
-  ../Siv3D/src/ThirdParty/plutovg/sw_ft_math.c
-  ../Siv3D/src/ThirdParty/plutovg/sw_ft_raster.c
-  ../Siv3D/src/ThirdParty/plutovg/sw_ft_stroker.c
+  ../Siv3D/src/ThirdParty/plutovg/plutovg-ft-math.c
+  ../Siv3D/src/ThirdParty/plutovg/plutovg-ft-raster.c
+  ../Siv3D/src/ThirdParty/plutovg/plutovg-ft-stroker.c
 
   ../Siv3D/src/ThirdParty/qr-code-generator-library/qrcodegen.cpp
 

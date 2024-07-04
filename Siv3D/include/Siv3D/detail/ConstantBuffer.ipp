@@ -25,9 +25,11 @@ namespace s3d
 	}
 
 	template <class Type>
-	inline ConstantBuffer<Type>::~ConstantBuffer()
+	template <class ...Args, std::enable_if_t<std::is_constructible_v<Type, Args...>>*>
+	inline ConstantBuffer<Type>::ConstantBuffer(Args&&... args)
+		: ConstantBuffer{}
 	{
-		AlignedDelete(m_wrapper);
+		m_wrapper->data = Type(std::forward<Args>(args)...);
 	}
 
 	template <class Type>

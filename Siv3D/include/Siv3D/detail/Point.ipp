@@ -246,7 +246,17 @@ namespace s3d
 		x = 0; y = 0;
 	}
 
-	inline constexpr Point& Point::set(const int32 _x, const int32 _y) noexcept
+	inline constexpr Point Point::withX(const value_type _x) const noexcept
+	{
+		return{ _x, y };
+	}
+
+	inline constexpr Point Point::withY(const value_type _y) const noexcept
+	{
+		return{ x, _y };
+	}
+
+	inline constexpr Point& Point::set(const value_type _x, const value_type _y) noexcept
 	{
 		x = _x; y = _y;
 		return *this;
@@ -257,7 +267,7 @@ namespace s3d
 		return (*this = p);
 	}
 
-	inline constexpr Point Point::movedBy(const int32 _x, const int32 _y) const noexcept
+	inline constexpr Point Point::movedBy(const value_type _x, const value_type _y) const noexcept
 	{
 		return{ (x + _x), (y + _y) };
 	}
@@ -273,7 +283,7 @@ namespace s3d
 		return{ (x + v.x), (y + v.y) };
 	}
 
-	inline constexpr Point& Point::moveBy(const int32 _x, const int32 _y) noexcept
+	inline constexpr Point& Point::moveBy(const value_type _x, const value_type _y) noexcept
 	{
 		x += _x; y += _y;
 		return *this;
@@ -299,13 +309,17 @@ namespace s3d
 	template <class Type>
 	inline Type Point::length() const noexcept
 	{
-		return static_cast<Type>(std::sqrt((x * x) + (y * y)));
+		const Type x_ = static_cast<Type>(x);
+		const Type y_ = static_cast<Type>(y);
+		return static_cast<Type>(std::sqrt((x_ * x_) + (y_ * y_)));
 	}
 
 	template <class Type>
 	inline constexpr Type Point::lengthSq() const noexcept
 	{
-		return static_cast<Type>((x * x) + (y * y));
+		const Type x_ = static_cast<Type>(x);
+		const Type y_ = static_cast<Type>(y);
+		return ((x_ * x_) + (y_ * y_));
 	}
 
 	inline constexpr int32 Point::manhattanLength() const noexcept

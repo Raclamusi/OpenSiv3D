@@ -18,13 +18,28 @@
 
 namespace s3d
 {
+	struct Mat3x3;
+	struct VS2DQuadWarp;
+	struct PS2DQuadWarp;
+
+	enum class EngineVS
+	{
+		QuadWarp,
+	};
+
 	enum class EnginePS
 	{
 		Copy,
-		
+
+		GaussianBlur_5,
+
 		GaussianBlur_9,
 
+		GaussianBlur_13,
+
 		ApplySrgbCurve,
+
+		QuadWarp,
 	};
 
 	class SIV3D_NOVTABLE ISiv3DShader
@@ -62,6 +77,10 @@ namespace s3d
 		virtual void setConstantBufferPS(uint32 slot, const ConstantBufferBase& cb) = 0;
 
 
+		virtual const VertexShader& getEngineVS(EngineVS vs) const = 0;
+
 		virtual const PixelShader& getEnginePS(EnginePS ps) const = 0;
+
+		virtual void setQuadWarpCB(const VS2DQuadWarp& vsCB, const PS2DQuadWarp& psCB) = 0;
 	};
 }

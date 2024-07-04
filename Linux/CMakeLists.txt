@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 project(OpenSiv3D_Linux
-    VERSION 0.6.13
+    VERSION 0.6.15
     LANGUAGES CXX C ASM
     HOMEPAGE_URL "https://github.com/Siv3D/OpenSiv3D"
     DESCRIPTION "A C++20 framework for creative coding (2D/3D games, media art, visualizers, and simulators)."
@@ -413,7 +413,12 @@ set(SIV3D_INTERNAL_SOURCES
   ../Siv3D/src/Siv3D/NinePatch/NinePatchDetail.cpp
   ../Siv3D/src/Siv3D/NinePatch/SivNinePatch.cpp
   ../Siv3D/src/Siv3D/None/SivNone.cpp
-  ../Siv3D/src/Siv3D/OpenAI/SivOpenAI.cpp
+  ../Siv3D/src/Siv3D/OpenAI/OpenAICommon.cpp
+  ../Siv3D/src/Siv3D/OpenAI/SivOpenAIChat.cpp
+  ../Siv3D/src/Siv3D/OpenAI/SivOpenAIEmbedding.cpp
+  ../Siv3D/src/Siv3D/OpenAI/SivOpenAIImage.cpp
+  ../Siv3D/src/Siv3D/OpenAI/SivOpenAISpeech.cpp
+  ../Siv3D/src/Siv3D/OpenAI/SivOpenAIVision.cpp
   ../Siv3D/src/Siv3D/OpenCV_Bridge/SivOpenCV_Bridge.cpp
   ../Siv3D/src/Siv3D/OrientedBox/SivOrientedBox.cpp
   ../Siv3D/src/Siv3D/OSCMessage/OSCMessageDetail.cpp
@@ -867,8 +872,6 @@ set(SIV3D_INTERNAL_SOURCES
   ../Siv3D/src/ThirdParty/double-conversion/double-to-string.cc
   ../Siv3D/src/ThirdParty/double-conversion/fast-dtoa.cc
   ../Siv3D/src/ThirdParty/double-conversion/fixed-dtoa.cc
-  ../Siv3D/src/ThirdParty/double-conversion/string-to-double.cc
-  ../Siv3D/src/ThirdParty/double-conversion/strtod.cc
 
   ../Siv3D/src/ThirdParty/easyexif/exif.cpp
 
@@ -1107,9 +1110,9 @@ set(SIV3D_INTERNAL_SOURCES
   ../Siv3D/src/ThirdParty/plutovg/plutovg-paint.c
   ../Siv3D/src/ThirdParty/plutovg/plutovg-rle.c
   ../Siv3D/src/ThirdParty/plutovg/plutovg.c
-  ../Siv3D/src/ThirdParty/plutovg/sw_ft_math.c
-  ../Siv3D/src/ThirdParty/plutovg/sw_ft_raster.c
-  ../Siv3D/src/ThirdParty/plutovg/sw_ft_stroker.c
+  ../Siv3D/src/ThirdParty/plutovg/plutovg-ft-math.c
+  ../Siv3D/src/ThirdParty/plutovg/plutovg-ft-raster.c
+  ../Siv3D/src/ThirdParty/plutovg/plutovg-ft-stroker.c
 
   ../Siv3D/src/ThirdParty/qr-code-generator-library/qrcodegen.cpp
 

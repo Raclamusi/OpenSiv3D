@@ -670,12 +670,21 @@ namespace s3d
 			}
 		};
 
-		static void BeginDrop(IDataObject** lpDataObejct, IDropSource** lpDropSource, const FilePath& path)
+		static void BeginDrop(IDataObject** lpDataObejct, IDropSource** lpDropSource, const Array<FilePath>& paths)
 		{
-			std::wstring pathW = (FileSystem::FullPath(path)).toWstr();
-			pathW.push_back(L'\0');
-			pathW.push_back(L'\0');
-			const size_t path_size_bytes = (sizeof(wchar_t) * pathW.size());
+			// must be double null terminated
+			std::wstring data;
+			{
+				for (const auto& path : paths)
+				{
+					data += (FileSystem::FullPath(path)).toWstr();
+					data.push_back(L'\0');
+				}
+
+				data.push_back(L'\0');
+			}
+
+			const size_t data_size_bytes = (sizeof(wchar_t) * data.size());
 
 			FORMATETC formatetc;
 			formatetc.cfFormat = CF_HDROP;
@@ -687,14 +696,14 @@ namespace s3d
 			STGMEDIUM medium
 			{
 				.tymed		= TYMED_HGLOBAL,
-				.hGlobal	= ::GlobalAlloc(GMEM_MOVEABLE, sizeof(DROPFILES) + path_size_bytes)
+				.hGlobal	= ::GlobalAlloc(GMEM_MOVEABLE, sizeof(DROPFILES) + data_size_bytes)
 			};
 			
 			if (void* p = ::GlobalLock(medium.hGlobal))
 			{
 				((DROPFILES*)p)->pFiles = sizeof(DROPFILES);
 				((DROPFILES*)p)->fWide = true;
-				std::memcpy((char*)p + sizeof(DROPFILES), pathW.data(), path_size_bytes);
+				std::memcpy((char*)p + sizeof(DROPFILES), data.data(), data_size_bytes);
 				::GlobalUnlock(medium.hGlobal);
 			}
 
@@ -732,7 +741,11 @@ namespace s3d
 
 		if (FAILED(::RegisterDragDrop(m_hWnd, m_pDropTarget)))
 		{
-			throw EngineError{ U"RegisterDragDrop() failed" };
+			LOG_WARNING(U"RegisterDragDrop() failed");
+		}
+		else
+		{
+			m_initialized = true;
 		}
 
 		m_pDropTarget->Release();
@@ -740,6 +753,11 @@ namespace s3d
 
 	void CDragDrop::update()
 	{
+		if (not m_initialized)
+		{
+			return;
+		}
+
 		const auto status = m_pDropTarget->getStatus();
 
 		const Array<DroppedFilePath>& filePaths = std::get<Array<DroppedFilePath>>(status);
@@ -759,11 +777,21 @@ namespace s3d
 
 	void CDragDrop::acceptFilePaths(const bool accept)
 	{
+		if (not m_initialized)
+		{
+			return;
+		}
+
 		m_pDropTarget->acceptFilePaths(accept);
 	}
 
 	void CDragDrop::acceptText(const bool accept)
 	{
+		if (not m_initialized)
+		{
+			return;
+		}
+
 		m_pDropTarget->acceptText(accept);
 	}
 
@@ -818,27 +846,37 @@ namespace s3d
 		return dropped;
 	}
 
-	void CDragDrop::makeDragDrop(const FilePathView path)
+	void CDragDrop::makeDragDrop(const Array<FilePath>& paths)
 	{
+		if (not m_initialized)
+		{
+			return;
+		}
+
 		std::lock_guard lock{ m_mutex };
 
-		m_newDragPath = path;
+		m_newDragPaths = paths;
 	}
 
 	void CDragDrop::process()
 	{
-		FilePath path;
+		if (not m_initialized)
+		{
+			return;
+		}
+
+		Array<FilePath> paths;
 
 		{
 			std::lock_guard lock{ m_mutex };
 
-			if (m_newDragPath)
+			if (m_newDragPaths)
 			{
-				path.swap(m_newDragPath);
+				paths.swap(m_newDragPaths);
 			}
 		}
 
-		if (not path)
+		if (not paths)
 		{
 			return;
 		}
@@ -847,7 +885,7 @@ namespace s3d
 			ComPtr<IDataObject> dataObject;
 			ComPtr<IDropSource> dropSource;
 
-			detail::BeginDrop(&dataObject, &dropSource, path);
+			detail::BeginDrop(&dataObject, &dropSource, paths);
 
 			DWORD dropEffect;
 			HRESULT hr = ::DoDragDrop(dataObject.Get(), dropSource.Get(), DROPEFFECT_MOVE | DROPEFFECT_COPY, &dropEffect);

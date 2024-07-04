@@ -268,6 +268,30 @@ namespace s3d
 	}
 
 	template <class Type>
+	inline constexpr Vector4D<Type> Vector4D<Type>::withX(const value_type _x) const noexcept
+	{
+		return{ _x, y, z, w };
+	}
+
+	template <class Type>
+	inline constexpr Vector4D<Type> Vector4D<Type>::withY(const value_type _y) const noexcept
+	{
+		return{ x, _y, z, w };
+	}
+
+	template <class Type>
+	inline constexpr Vector4D<Type> Vector4D<Type>::withZ(const value_type _z) const noexcept
+	{
+		return{ x, y, _z, w };
+	}
+
+	template <class Type>
+	inline constexpr Vector4D<Type> Vector4D<Type>::withW(const value_type _w) const noexcept
+	{
+		return{ x, y, z, _w };
+	}
+
+	template <class Type>
 	inline constexpr Vector4D<Type>& Vector4D<Type>::set(const Vector2D<value_type>& xy, const Vector2D<value_type>& zw) noexcept
 	{
 		x = xy.x; y = xy.y; z = zw.x; w = zw.y;
@@ -474,13 +498,50 @@ namespace s3d
 	template <class Type>
 	inline Vector4D<Type> Vector4D<Type>::normalized() const noexcept
 	{
-		return (*this * invLength());
+		const value_type lenSq = lengthSq();
+
+		if (lenSq == 0)
+		{
+			return *this;
+		}
+
+		const value_type invLen = (static_cast<value_type>(1.0) / std::sqrt(lenSq));
+
+		return{ (x * invLen), (y * invLen), (z * invLen), (w * invLen) };
 	}
 
 	template <class Type>
 	inline Vector4D<Type>& Vector4D<Type>::normalize() noexcept
 	{
-		return (*this *= invLength());
+		const value_type lenSq = lengthSq();
+
+		if (lenSq == 0)
+		{
+			x = y = z = w = 0;
+		}
+		else
+		{
+			const value_type invLen = (static_cast<value_type>(1.0) / std::sqrt(lenSq));
+			x *= invLen;
+			y *= invLen;
+			z *= invLen;
+			w *= invLen;
+		}
+
+		return *this;
+	}
+
+	template <class Type>
+	inline Vector4D<Type> Vector4D<Type>::normalized_or(const Vector4D<Type> valueIfZero) const noexcept
+	{
+		const value_type lenSq = lengthSq();
+
+		if (lenSq == 0)
+		{
+			return valueIfZero;
+		}
+
+		return (*this * (static_cast<value_type>(1.0) / std::sqrt(lenSq)));
 	}
 
 	template <class Type>

@@ -1125,6 +1125,9 @@
 // エッジ保持フィルタ | Edge preserving filter
 # include <Siv3D/EdgePreservingFilterType.hpp>
 
+// ボックスフィルタ | Box filter
+# include <Siv3D/BoxFilterSize.hpp>
+
 // 画像 | Image
 # include <Siv3D/Image.hpp>
 
@@ -1852,6 +1855,16 @@
 
 // OpenAI API | OpenAI API
 # include <Siv3D/OpenAI.hpp>
+
+# include <Siv3D/OpenAI/Chat.hpp>
+
+# include <Siv3D/OpenAI/Vision.hpp>
+
+# include <Siv3D/OpenAI/Image.hpp>
+
+# include <Siv3D/OpenAI/Embedding.hpp>
+
+# include <Siv3D/OpenAI/Speech.hpp>
 
 //////////////////////////////////////////////////
 //

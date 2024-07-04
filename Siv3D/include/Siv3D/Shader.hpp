@@ -18,6 +18,7 @@
 # include "Graphics2D.hpp"
 # include "2DShapes.hpp"
 # include "TextureFilter.hpp"
+# include "BoxFilterSize.hpp"
 
 namespace s3d
 {
@@ -35,18 +36,19 @@ namespace s3d
 		/// @remark from と to は異なるテクスチャである必要があります。
 		void Downsample(const TextureRegion& from, const RenderTexture& to);
 
-		void GaussianBlurH(const TextureRegion& from, const RenderTexture& to);
+		void GaussianBlurH(const TextureRegion& from, const RenderTexture& to, BoxFilterSize boxFilterSize = BoxFilterSize::BoxFilter9x9);
 
-		void GaussianBlurV(const TextureRegion& from, const RenderTexture& to);
+		void GaussianBlurV(const TextureRegion& from, const RenderTexture& to, BoxFilterSize boxFilterSize = BoxFilterSize::BoxFilter9x9);
 
-		void GaussianBlur(const TextureRegion& from, const RenderTexture& to, const Vec2& direction);
+		void GaussianBlur(const TextureRegion& from, const RenderTexture& to, const Vec2& direction, BoxFilterSize boxFilterSize = BoxFilterSize::BoxFilter9x9);
 
 		/// @brief テクスチャの内容をガウスぼかしして別のレンダーテクスチャに描画します。
 		/// @param from 元のテクスチャ
 		/// @param internalBuffer 中間状態を格納するレンダーテクスチャ
 		/// @param to 描画先のレンダーテクスチャ
+		/// @param boxFilterSize ボックスフィルタのサイズ
 		/// @remark internalBuffer は from や　to と同サイズで異なるテクスチャである必要があります。
-		void GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to);
+		void GaussianBlur(const TextureRegion& from, const RenderTexture& internalBuffer, const RenderTexture& to, BoxFilterSize boxFilterSize = BoxFilterSize::BoxFilter9x9);
 
 		/// @brief 3D シーンを描画したリニア色空間のレンダーテクスチャを、メインのシーンに転送します。
 		/// @param src 転送するテクスチャ
@@ -65,6 +67,13 @@ namespace s3d
 		/// @param dst メインのシーンの転送先領域
 		/// @param textureFilter リサイズする場合のテクスチャフィルタ
 		void LinearToScreen(const TextureRegion& src, const RectF& dst = RectF{ Graphics2D::GetRenderTargetSize() }, TextureFilter textureFilter = TextureFilter::Linear);
+	
+		/// @brief 指定した四角形に射影変換を用いてテクスチャを描画します。
+		/// @param quad 四角形
+		/// @param texture テクスチャ
+		/// @remark 内部で専用の頂点シェーダおよびピクセルシェーダ、頂点シェーダ定数バッファ slot 1, ピクセルシェーダ定数バッファ slot 1 を使用します。
+		/// @remark ミップマップを持つテクスチャを使用する場合は、テクスチャのサンプラーステートを Aniso に設定すると、高品質な描画が可能です。
+		void QuadWarp(const Quad& quad, const TextureRegion& texture);
 	}
 
 # if SIV3D_PLATFORM(WINDOWS)
