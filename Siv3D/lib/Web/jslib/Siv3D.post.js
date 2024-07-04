@@ -19,6 +19,13 @@
     if (Module["_emscripten_clear_interval"]) {
         Module["_emscripten_clear_interval"].sig = "vi";
     }
+
+    siv3dRegisterUserAction(() => {
+        const ctx = Module["getCurrentAudioContext"]();
+        if (ctx.state === "suspended") {
+            ctx.resume();
+        }
+    });
 })();
 
 __ATEXIT__.push(function() {
