@@ -16,6 +16,7 @@
 # include <Siv3D/ShaderStage.hpp>
 # include <Siv3D/Shader/IShader.hpp>
 # include <Siv3D/AssetHandleManager/AssetHandleManager.hpp>
+# include <Siv3D/Shader/EngineShader.hpp>
 # include <Siv3D/Texture/WebGPU/WebGPURenderTargetState.hpp>
 # include "VertexShader/WebGPUVertexShader.hpp"
 # include "PixelShader/WebGPUPixelShader.hpp"
@@ -70,7 +71,11 @@ namespace s3d
 
 		void resetConstantBufferPS();
 
+		const VertexShader& getEngineVS(EngineVS vs) const override;
+
 		const PixelShader& getEnginePS(EnginePS ps) const override;
+
+		void setQuadWarpCB(const VS2DQuadWarp& vsCB, const PS2DQuadWarp& psCB) override;
 
 		wgpu::RenderPipeline usePipeline(const wgpu::RenderPassEncoder& pass, RasterizerState rasterizerState, BlendState blendState, WebGPURenderTargetState renderTargetState, DepthStencilState depthStencilState, const WebGPUVertexAttribute& attribute);
 
@@ -100,6 +105,11 @@ namespace s3d
 
 		// Shader:: 用の内部シェーダ
 		Array<PixelShader> m_enginePSs;
+
+		// Shader:: 用の内部シェーダ
+		Array<VertexShader> m_engineVSs;
+
+		EngineShaderConstantBuffer m_engineShaderCBs;
 
 		VertexShader::IDType m_currentVS;
 		
