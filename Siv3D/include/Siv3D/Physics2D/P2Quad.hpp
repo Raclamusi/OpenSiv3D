@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -22,7 +22,9 @@ namespace s3d
 	public:
 
 		SIV3D_NODISCARD_CXX20
-		P2Quad(b2Body& body, const Quad& quad, const P2Material& material, const P2Filter& filter);
+		P2Quad(b2Body& body, const Quad& quad, const P2Material& material, const P2Filter& filter, bool isSensor);
+
+		~P2Quad();
 
 		[[nodiscard]]
 		P2ShapeType getShapeType() const noexcept override;

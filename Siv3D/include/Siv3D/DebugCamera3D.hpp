@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -32,7 +32,11 @@ namespace s3d
 
 	protected:
 
-		double m_focusY = (BasicCamera3D::m_focusPosition - BasicCamera3D::m_eyePosition).normalized().y;
+		double m_focusY = [this]
+			{
+				const auto focusVector = (BasicCamera3D::m_focusPosition - BasicCamera3D::m_eyePosition);
+				return (focusVector.y / std::hypot(focusVector.x, focusVector.z));
+			}();
 
 		double m_phi = std::atan2((BasicCamera3D::m_focusPosition.z - BasicCamera3D::m_eyePosition.z),
 			(BasicCamera3D::m_focusPosition.x - BasicCamera3D::m_eyePosition.x));

@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -18,6 +18,28 @@ namespace s3d
 {
 	namespace detail
 	{
+		[[nodiscard]]
+		static std::string Escape(const std::string& s)
+		{
+			std::string result;
+			result.push_back('\'');
+			
+			for (char ch : s)
+			{
+				if (ch == '\'')
+				{
+					result.append("'\\''");
+				}
+				else
+				{
+					result.push_back(ch);
+				}
+			}
+			
+			result.push_back('\'');
+			return result;
+		}
+	
 		[[nodiscard]]
 		static bool MacOS_OpenURLInBrowser(const char* _url)
 		{
@@ -185,14 +207,14 @@ namespace s3d
 	
 		bool LaunchFile(const FilePathView fileName)
 		{
-			const std::string command = ("open '" + FileSystem::NativePath(fileName) + "'");
+			const std::string command = ("open " + detail::Escape(FileSystem::NativePath(fileName)));
 
 			return (std::system(command.c_str()) == 0);
 		}
 
 		bool LaunchFileWithTextEditor(const FilePathView fileName)
 		{
-			const std::string command = ("open -t '" + FileSystem::NativePath(fileName) + "'");
+			const std::string command = ("open -t " + detail::Escape(FileSystem::NativePath(fileName)));
 
 			return (std::system(command.c_str()) == 0);
 		}

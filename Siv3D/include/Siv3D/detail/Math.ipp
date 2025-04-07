@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -1353,6 +1353,34 @@ namespace s3d
 		}
 
 		SIV3D_MATH_FUNCTION_CONSTEXPR_X(Smoothstep)
+
+		//////////////////////////////////////////////////
+		//
+		//	ClampAngle
+		//
+		//////////////////////////////////////////////////
+
+		inline float ClampAngle(const float angle, const float min, float max) noexcept
+		{
+			const auto start = (min + max) * 0.5f - PiF;
+			const auto floor = Floor((angle - start) / TwoPiF) * TwoPiF;
+			return Clamp(angle, min + floor, max + floor);
+		}
+
+		inline double ClampAngle(const double angle, const double min, double max) noexcept
+		{
+			const auto start = (min + max) * 0.5 - Pi;
+			const auto floor = Floor((angle - start) / TwoPi) * TwoPi;
+			return Clamp(angle, min + floor, max + floor);
+		}
+
+		SIV3D_CONCEPT_ARITHMETIC_
+		inline double ClampAngle(Arithmetic angle, Arithmetic min, Arithmetic max) noexcept
+		{
+			const auto start = (min + max) * 0.5 - Pi;
+			const auto floor = Floor((angle - start) / TwoPi) * TwoPi;
+			return Clamp(angle, min + floor, max + floor);
+		}
 
 		//////////////////////////////////////////////////
 		//

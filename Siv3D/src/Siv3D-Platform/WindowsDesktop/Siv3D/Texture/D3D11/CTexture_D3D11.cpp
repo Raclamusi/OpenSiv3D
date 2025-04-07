@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -42,11 +42,12 @@ namespace s3d
 
 		// 4x MSAA サポート状況を取得
 		{
-			constexpr std::array<TextureFormat, 10> formats =
+			constexpr std::array<TextureFormat, 11> formats =
 			{
 				TextureFormat::Unknown,
 				TextureFormat::R8G8B8A8_Unorm,
 				TextureFormat::R8G8B8A8_Unorm_SRGB,
+				TextureFormat::R16G16_Unorm,
 				TextureFormat::R16G16_Float,
 				TextureFormat::R32_Float,
 				TextureFormat::R10G10B10A2_Unorm,

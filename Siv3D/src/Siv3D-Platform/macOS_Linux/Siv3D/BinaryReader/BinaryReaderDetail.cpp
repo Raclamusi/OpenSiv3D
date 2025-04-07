@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -161,14 +161,15 @@ namespace s3d
 		{
 			if (not m_file.file.read(static_cast<char*>(dst.pointer), readBytes))
 			{
-				m_file.pos = m_file.file.tellg();
-
 				if (m_file.file.eof())
 				{
+					setPos(previousPos);
 					return readBytes;
 				}
 
 				LOG_FAIL(U"❌ BinaryReader `{0}`: ReadFile() failed"_fmt(m_info.fullPath));
+				
+				setPos(previousPos);
 				return 0;
 			}
 		}
@@ -192,14 +193,15 @@ namespace s3d
 		{
 			if (not m_file.file.read(static_cast<char*>(dst.pointer), readBytes))
 			{
-				m_file.pos = m_file.file.tellg();
-
 				if (m_file.file.eof())
 				{
+					setPos(previousPos);
 					return readBytes;
 				}
 
 				LOG_FAIL(U"❌ BinaryReader `{0}`: ReadFile() failed"_fmt(m_info.fullPath));
+				
+				setPos(previousPos);
 				return 0;
 			}
 		}

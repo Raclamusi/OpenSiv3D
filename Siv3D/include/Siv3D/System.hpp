@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -22,7 +22,7 @@ namespace s3d
 	namespace System
 	{
 		/// @brief 描画や入力情報など、フレームを更新します。
-		/// @remarkアプリケーション終了トリガーが発生するか、内部で回復不能なエラーが発生した場合に false を返します。この関数が false を返したらプログラムを終了させるべきです。
+		/// @remark アプリケーション終了トリガーが発生するか、内部で回復不能なエラーが発生した場合に false を返します。この関数が false を返したらプログラムを終了させるべきです。
 		/// @return プログラムの続行の可否
 		bool Update();
 
@@ -42,7 +42,7 @@ namespace s3d
 		uint32 GetTerminationTriggers() noexcept;
 
 		/// @brief 前回のフレームで発生したユーザアクションを返します。
-		/// @remarkフラグには `UserAction` の値の組み合わせが使われています。
+		/// @remark フラグには `UserAction` の値の組み合わせが使われています。
 		/// @return 前のフレームで発生したユーザアクションのフラグの組み合わせ
 		[[nodiscard]]
 		uint32 GetUserActions() noexcept;

@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -59,7 +59,7 @@ namespace s3d
 			return 0;
 		}
 
-		if (sizeBytes == 0)
+		if (sizeBytes <= 0)
 		{
 			return 0;
 		}
@@ -68,7 +68,10 @@ namespace s3d
 
 		if (m_writePos != static_cast<int64>(m_blob.size()))
 		{
-			m_blob.resize(newSize);
+			if (m_blob.size() < newSize)
+			{
+				m_blob.resize(newSize);
+			}
 
 			std::memcpy(&m_blob[static_cast<size_t>(m_writePos)], src, sizeBytes);
 		}

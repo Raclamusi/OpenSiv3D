@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -422,6 +422,12 @@ namespace s3d
 		/// @return 描画用グリフ
 		[[nodiscard]]
 		Glyph getGlyph(StringView ch) const;
+
+		/// @brief 指定した文字の描画用のグリフを返します。
+		/// @param glyphIndex 文字のグリフインデックス
+		/// @return 描画用グリフ
+		[[nodiscard]]
+		Glyph getGlyphByGlyphIndex(GlyphIndex glyphIndex) const;
 
 		/// @brief 指定した文字列の描画用のグリフ配列を返します。
 		/// @param s 文字列

@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -75,6 +75,21 @@ namespace s3d
 		}
 
 		::FreeConsole();
+	}
+	
+	void CConsole::clearSelection()
+	{
+		if (not m_isOpen)
+		{
+			return;
+		}
+
+		if (HWND hConsoleWindow = ::GetConsoleWindow())
+		{
+			// ESC キーを送信
+			::SendMessage(hConsoleWindow, WM_KEYDOWN, VK_ESCAPE, 0);
+			::SendMessage(hConsoleWindow, WM_KEYUP, VK_ESCAPE, 0);
+		}
 	}
 
 	void CConsole::setSystemDefaultCodePage()

@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -594,6 +594,32 @@ namespace s3d
 		/// @return 新しい文字列
 		[[nodiscard]]
 		String capitalized()&&;
+
+		/// @brief 文字列の要素を 1 つランダムに返します。
+		/// @return 文字列からランダムに選ばれた要素への参照
+		[[nodiscard]]
+		value_type& choice();
+
+		/// @brief 文字列の要素を 1 つランダムに返します。
+		/// @return 文字列からランダムに選ばれた要素への参照
+		[[nodiscard]]
+		const value_type& choice() const;
+
+		/// @brief 指定した乱数エンジンを用いて、文字列の要素を 1 つランダムに返します。
+		/// @tparam URBG 使用する乱数エンジンの型
+		/// @param rbg 使用する乱数エンジン
+		/// @return 文字列からランダムに選ばれた要素への参照
+		SIV3D_CONCEPT_URBG
+		[[nodiscard]]
+		value_type& choice(URBG&& rbg);
+
+		/// @brief 指定した乱数エンジンを用いて、文字列の要素を 1 つランダムに返します。
+		/// @tparam URBG 使用する乱数エンジンの型
+		/// @param rbg 使用する乱数エンジン
+		/// @return 文字列からランダムに選ばれた要素への参照
+		SIV3D_CONCEPT_URBG
+		[[nodiscard]]
+		const value_type& choice(URBG&& rbg) const;
 
 		/// @brief 指定した値と等しい要素の個数を返します。
 		/// @param ch 検索する値

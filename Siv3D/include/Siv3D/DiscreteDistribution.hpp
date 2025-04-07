@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -76,19 +76,19 @@ namespace s3d
 
 	template <class Iterator, class URBG>
 	[[nodiscard]]
-	inline auto DiscreteSample(Iterator begin, Iterator end, DiscreteDistribution& weight, URBG&& urbg);
+	inline decltype(auto) DiscreteSample(Iterator begin, Iterator end, DiscreteDistribution& weight, URBG&& urbg);
 
 	template <class Iterator>
 	[[nodiscard]]
-	inline auto DiscreteSample(Iterator begin, Iterator end, DiscreteDistribution& weight);
+	inline decltype(auto) DiscreteSample(Iterator begin, Iterator end, DiscreteDistribution& weight);
 
 	template <class Container, class URBG>
 	[[nodiscard]]
-	inline auto DiscreteSample(const Container& c, DiscreteDistribution& weight, URBG&& urbg);
+	inline decltype(auto) DiscreteSample(const Container& c, DiscreteDistribution& weight, URBG&& urbg);
 
 	template <class Container>
 	[[nodiscard]]
-	inline auto DiscreteSample(const Container& c, DiscreteDistribution& weight);
+	inline decltype(auto) DiscreteSample(const Container& c, DiscreteDistribution& weight);
 
 	template <class Type, class URBG>
 	[[nodiscard]]

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 project(OpenSiv3D_Linux
-    VERSION 0.6.15
+    VERSION 0.6.16
     LANGUAGES CXX C ASM
     HOMEPAGE_URL "https://github.com/Siv3D/OpenSiv3D"
     DESCRIPTION "A C++20 framework for creative coding (2D/3D games, media art, visualizers, and simulators)."
@@ -11,7 +11,7 @@ project(OpenSiv3D_Linux
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(SIV3D_THIRD_PARTY REQUIRED alsa libavcodec libavformat libavutil libcurl freetype2 gl glib-2.0 gtk+-3.0 harfbuzz libmpg123 ogg opencv4 opus opusfile libpng soundtouch libswresample libtiff-4 libturbojpeg uuid vorbis vorbisenc vorbisfile libwebp x11 glu xft zlib)
 
-find_package(Boost 1.71.0...1.74.0 REQUIRED)
+find_package(Boost 1.71.0 REQUIRED)
 message(STATUS "[info] Boost_INCLUDE_DIRS: ${Boost_INCLUDE_DIRS}")
 message(STATUS "[info] SIV3D_THIRD_PARTY_INCLUDE_DIRS: ${SIV3D_THIRD_PARTY_INCLUDE_DIRS}")
 
@@ -933,40 +933,6 @@ set(SIV3D_INTERNAL_SOURCES
   ../Siv3D/src/ThirdParty/infoware/src/system/OS_info/os_info_darwin.cpp
   ../Siv3D/src/ThirdParty/infoware/src/system/OS_info/os_info_non_windows_non_darwin.cpp
   ../Siv3D/src/ThirdParty/infoware/src/system/OS_info/os_info_windows.cpp
-
-  ../Siv3D/src/ThirdParty/lua/lapi.c
-  ../Siv3D/src/ThirdParty/lua/lauxlib.c
-  ../Siv3D/src/ThirdParty/lua/lbaselib.c
-  ../Siv3D/src/ThirdParty/lua/lcode.c
-  ../Siv3D/src/ThirdParty/lua/lcorolib.c
-  ../Siv3D/src/ThirdParty/lua/lctype.c
-  ../Siv3D/src/ThirdParty/lua/ldblib.c
-  ../Siv3D/src/ThirdParty/lua/ldebug.c
-  ../Siv3D/src/ThirdParty/lua/ldo.c
-  ../Siv3D/src/ThirdParty/lua/ldump.c
-  ../Siv3D/src/ThirdParty/lua/lfunc.c
-  ../Siv3D/src/ThirdParty/lua/lgc.c
-  ../Siv3D/src/ThirdParty/lua/linit.c
-  ../Siv3D/src/ThirdParty/lua/liolib.c
-  ../Siv3D/src/ThirdParty/lua/llex.c
-  ../Siv3D/src/ThirdParty/lua/lmathlib.c
-  ../Siv3D/src/ThirdParty/lua/lmem.c
-  ../Siv3D/src/ThirdParty/lua/loadlib.c
-  ../Siv3D/src/ThirdParty/lua/lobject.c
-  ../Siv3D/src/ThirdParty/lua/lopcodes.c
-  ../Siv3D/src/ThirdParty/lua/loslib.c
-  ../Siv3D/src/ThirdParty/lua/lparser.c
-  ../Siv3D/src/ThirdParty/lua/lstate.c
-  ../Siv3D/src/ThirdParty/lua/lstring.c
-  ../Siv3D/src/ThirdParty/lua/lstrlib.c
-  ../Siv3D/src/ThirdParty/lua/ltable.c
-  ../Siv3D/src/ThirdParty/lua/ltablib.c
-  ../Siv3D/src/ThirdParty/lua/ltm.c
-  ../Siv3D/src/ThirdParty/lua/lua.c
-  ../Siv3D/src/ThirdParty/lua/lundump.c
-  ../Siv3D/src/ThirdParty/lua/lutf8lib.c
-  ../Siv3D/src/ThirdParty/lua/lvm.c
-  ../Siv3D/src/ThirdParty/lua/lzio.c
 
   ../Siv3D/src/ThirdParty/lunasvg/canvas.cpp
   ../Siv3D/src/ThirdParty/lunasvg/clippathelement.cpp

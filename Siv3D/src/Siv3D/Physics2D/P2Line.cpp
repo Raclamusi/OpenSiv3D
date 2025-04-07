@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -14,7 +14,7 @@
 
 namespace s3d
 {
-	P2Line::P2Line(b2Body& body, const Line& localPos, const OneSided oneSided, const P2Material& material, const P2Filter& filter)
+	P2Line::P2Line(b2Body& body, const Line& localPos, const OneSided oneSided, const P2Material& material, const P2Filter& filter, const bool isSensor)
 		: m_pShape{ std::make_unique<b2EdgeShape>() }
 		, m_oneSided{ oneSided }
 	{
@@ -30,10 +30,12 @@ namespace s3d
 			m_pShape->SetTwoSided(p0, p1);
 		}
 
-		const b2FixtureDef fixtureDef = detail::MakeFixtureDef(m_pShape.get(), material, filter);
+		const b2FixtureDef fixtureDef = detail::MakeFixtureDef(m_pShape.get(), material, filter, isSensor);
 
 		m_fixtures.push_back(body.CreateFixture(&fixtureDef));
 	}
+
+	P2Line::~P2Line() = default;
 
 	P2ShapeType P2Line::getShapeType() const noexcept
 	{

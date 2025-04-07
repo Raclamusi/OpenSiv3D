@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -59,6 +59,19 @@ namespace s3d
 		const auto [x1, x2] = std::minmax(begin.x, end.x);
 		const auto [y1, y2] = std::minmax(begin.y, end.y);
 		return{ x1, y1, (x2 - x1), (y2 - y1) };
+	}
+
+	Quad Line::withThickness(const double thickness) const
+	{
+		if (thickness <= 0.0)
+		{
+			return{ begin, end, end, begin };
+		}
+
+		const Vec2 perpendicularUnitVector = Vec2{ (end.y - begin.y), (begin.x - end.x) }.normalized();
+		const Vec2 nv = ((thickness * 0.5) * perpendicularUnitVector);
+
+		return{ (begin + nv), (end + nv), (end - nv), (begin - nv) };
 	}
 
 	Line Line::extractLine(double distanceFromOrigin, double length) const noexcept

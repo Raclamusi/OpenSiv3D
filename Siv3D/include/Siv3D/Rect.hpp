@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -524,6 +524,30 @@ namespace s3d
 		[[nodiscard]]
 		constexpr Rect stretched(value_type top, value_type right, value_type bottom, value_type left) const noexcept;
 
+		/// @brief 上方向に拡大縮小した長方形を返します。
+		/// @param top 上方向の拡大縮小量
+		/// @return 上方向に拡大縮小した長方形
+		[[nodiscard]]
+		constexpr Rect stretched(Arg::top_<value_type> top) const noexcept;
+
+		/// @brief 右方向に拡大縮小した長方形を返します。
+		/// @param right 右方向の拡大縮小量
+		/// @return 右方向に拡大縮小した長方形
+		[[nodiscard]]
+		constexpr Rect stretched(Arg::right_<value_type> right) const noexcept;
+
+		/// @brief 下方向に拡大縮小した長方形を返します。
+		/// @param bottom 下方向の拡大縮小量
+		/// @return 下方向に拡大縮小した長方形
+		[[nodiscard]]
+		constexpr Rect stretched(Arg::bottom_<value_type> bottom) const noexcept;
+
+		/// @brief 左方向に拡大縮小した長方形を返します。
+		/// @param left 左方向の拡大縮小量
+		/// @return 左方向に拡大縮小した長方形
+		[[nodiscard]]
+		constexpr Rect stretched(Arg::left_<value_type> left) const noexcept;
+
 		[[nodiscard]]
 		constexpr RectF scaled(double s) const noexcept;
 
@@ -724,7 +748,22 @@ namespace s3d
 		constexpr RoundRect rounded(double r) const noexcept;
 
 		[[nodiscard]]
-		Polygon rounded(double tl, double tr, double br, double bl) const noexcept;
+		Polygon rounded(double tl, double tr, double br, double bl) const;
+
+		/// @brief 長方形を面取りした Polygon を返します。
+		/// @param size 面取りの大きさ
+		/// @return 面取りした Polygon
+		[[nodiscard]]
+		Polygon chamfered(double size) const;
+
+		/// @brief 長方形を面取りした Polygon を返します。
+		/// @param tl 左上の面取りの大きさ
+		/// @param tr 右上の面取りの大きさ
+		/// @param br 右下の面取りの大きさ
+		/// @param bl 左下の面取りの大きさ
+		/// @return 面取りした Polygon
+		[[nodiscard]]
+		Polygon chamfered(double tl, double tr, double br, double bl) const;
 
 		/// @brief 長方形を Quad として返します。
 		/// @return 長方形の Quad

@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -87,6 +87,8 @@ namespace s3d
 		virtual const Texture& getTexture(Font::IDType handleID) = 0;
 
 		virtual Glyph getGlyph(Font::IDType handleID, StringView ch) = 0;
+		
+		virtual Glyph getGlyphByGlyphIndex(Font::IDType handleID, GlyphIndex glyphIndex) = 0;
 
 		virtual Array<Glyph> getGlyphs(Font::IDType handleID, StringView s, Ligature ligature) = 0;
 

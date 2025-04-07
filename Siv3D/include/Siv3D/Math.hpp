@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -1320,6 +1320,28 @@ namespace s3d
 
 		[[nodiscard]]
 		inline constexpr Vec4 Smoothstep(Vec4 v) noexcept;
+
+		//////////////////////////////////////////////////
+		//
+		//	ClampAngle
+		//
+		//////////////////////////////////////////////////
+
+		/// @brief 最小角と最大角の範囲にクランプした角度を返します。
+		/// @param angle クランプする角度（ラジアン）
+		/// @param min 範囲の最小角（ラジアン）
+		/// @param max 範囲の最大角（ラジアン）
+		/// @return クランプした角度（ラジアン）
+		/// @remark angle が min の方向と max の方向の間を指さない場合、より近いほうの角度を返します。
+		[[nodiscard]]
+		inline float ClampAngle(float angle, float min, float max) noexcept;
+
+		[[nodiscard]]
+		inline double ClampAngle(double angle, double min, double max) noexcept;
+
+		SIV3D_CONCEPT_ARITHMETIC
+		[[nodiscard]]
+		inline double ClampAngle(Arithmetic angle, Arithmetic min, Arithmetic max) noexcept;
 
 		//////////////////////////////////////////////////
 		//

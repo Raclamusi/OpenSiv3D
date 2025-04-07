@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -20,11 +20,12 @@ namespace s3d
 
 		struct Iterator
 		{
+			using reference = std::tuple<size_t, decltype(*std::declval<It&>())>;
 			size_t index;
 			It it;
 			constexpr bool operator != (const Iterator& other) const { return it != other.it; }
 			constexpr void operator ++() { ++index; ++it; }
-			constexpr auto operator *() const { return std::tie(index, *it); }
+			constexpr auto operator *() const { return reference{ index, *it }; }
 		};
 
 		struct IterableWrapper
@@ -48,11 +49,12 @@ namespace s3d
 	{
 		struct Iterator
 		{
+			using reference = std::tuple<size_t, decltype(*std::declval<It&>())>;
 			size_t index;
 			It it;
 			constexpr bool operator != (const Iterator& other) const { return it != other.it; }
 			constexpr void operator ++() { --index; ++it; }
-			constexpr auto operator *() const { return std::tie(index, *it); }
+			constexpr auto operator *() const { return reference{ index, *it }; }
 		};
 
 		struct IterableWrapper

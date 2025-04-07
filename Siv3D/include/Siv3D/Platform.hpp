@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -127,11 +127,11 @@
 //
 //////////////////////////////////////////////////
 
-# if SIV3D_PLATFORM(WINDOWS) && (_MSC_VER < 1934) // 古い Visual Studio | Old MSVC
+# if SIV3D_PLATFORM(WINDOWS) && (_MSC_VER < 1940) // 古い Visual Studio | Old MSVC
 
 	// お使いの Visual Studio のバージョンが古い場合、このエラーが発生します
 	// This error occures when your Visual Studio version is not up to date.
-	# error Please update the Visual Studio. Visual Studio 2022 17.4 is required to build this project.
+	# error Please update the Visual Studio. Visual Studio 2022 17.10 is required to build this project.
 
 # endif
 

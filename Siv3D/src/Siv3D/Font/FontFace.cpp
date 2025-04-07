@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -231,7 +231,7 @@ namespace s3d
 					method = FontMethod::Bitmap;
 				}
 
-				m_property.spaceWidth = GetGlyphInfo(m_face, spaceGlyphIndex, m_property, method).xAdvance;
+				m_property.spaceWidth = GetGlyphInfo(m_face, spaceGlyphIndex, m_property, method, 0).xAdvance;
 			}
 		}
 

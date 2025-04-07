@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -149,6 +149,52 @@ namespace s3d
 	inline void SIV3D_SERIALIZE_SAVE_M(const Archive&, Byte& value, const uint8& data)
 	{
 		value = Byte{ data };
+	}
+
+	//////////////////////////////////////////////////////
+	//
+	//	int128
+	//
+	template <class Archive>
+	inline void SIV3D_SERIALIZE_SAVE(Archive& archive, const int128& value)
+	{
+		const uint64 low = absl::Int128Low64(value);
+		const int64 high = absl::Int128High64(value);
+		archive(low);
+		archive(high);
+	}
+
+	template <class Archive>
+	inline void SIV3D_SERIALIZE_LOAD(Archive& archive, int128& value)
+	{
+		uint64 low = 0;
+		int64 high = 0;
+		archive(low);
+		archive(high);
+		value = absl::MakeInt128(high, low);
+	}
+
+	//////////////////////////////////////////////////////
+	//
+	//	uint128
+	//
+	template <class Archive>
+	inline void SIV3D_SERIALIZE_SAVE(Archive& archive, const uint128& value)
+	{
+		const uint64 low = absl::Uint128Low64(value);
+		const uint64 high = absl::Uint128High64(value);
+		archive(low);
+		archive(high);
+	}
+
+	template <class Archive>
+	inline void SIV3D_SERIALIZE_LOAD(Archive& archive, uint128& value)
+	{
+		uint64 low = 0;
+		uint64 high = 0;
+		archive(low);
+		archive(high);
+		value = absl::MakeUint128(high, low);
 	}
 
 	//////////////////////////////////////////////////////

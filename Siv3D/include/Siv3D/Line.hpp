@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -190,6 +190,12 @@ namespace s3d
 
 		[[nodiscard]]
 		RectF boundingRect() const noexcept;
+
+		/// @brief 線分に太さを与えて作成した、新しい四角形を返します。
+		/// @param thickness 太さ
+		/// @return 新しい四角形
+		[[nodiscard]]
+		Quad withThickness(double thickness) const;
 
 		[[nodiscard]]
 		Line extractLine(double distanceFromOrigin, double length) const noexcept;

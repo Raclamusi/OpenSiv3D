@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -89,7 +89,7 @@ namespace s3d
 		return quad;
 	}
 
-	Polygon Rect::rounded(double tl, double tr, double br, double bl) const noexcept
+	Polygon Rect::rounded(double tl, double tr, double br, double bl) const
 	{
 		constexpr double epsilon = 0.001;
 
@@ -222,6 +222,16 @@ namespace s3d
 		}
 
 		return Polygon{ vertices };
+	}
+
+	Polygon Rect::chamfered(const double size) const
+	{
+		return RectF{ *this }.chamfered(size);
+	}
+
+	Polygon Rect::chamfered(const double tl, const double tr, const double br, const double bl) const
+	{
+		return RectF{ *this }.chamfered(tl, tr, br, bl);
 	}
 
 	LineString Rect::outline(const CloseRing closeRing) const

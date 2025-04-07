@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -35,7 +35,7 @@ namespace s3d
 		AssetHandleManager<Texture::IDType, D3D11Texture> m_textures{ U"Texture" };
 
 		// マルチサンプルの対応
-		std::array<bool, 10> m_multiSampleAvailable = {};
+		std::array<bool, 11> m_multiSampleAvailable = {};
 
 	public:
 

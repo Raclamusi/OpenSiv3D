@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -184,15 +184,15 @@ namespace s3d
 		[[nodiscard]]
 		constexpr bool isZero() const noexcept;
 
-		/// @brief 最大の成分を返します。
-		/// @remark Point{ 3, 2 } の場合、3 を返します。
-		/// @return 最大の成分
-		[[nodiscard]]
-		constexpr value_type minComponent() const noexcept;
-
 		/// @brief 最小の成分を返します。
 		/// @remark Point{ 3, 2 } の場合、2 を返します。
 		/// @return 最小の成分
+		[[nodiscard]]
+		constexpr value_type minComponent() const noexcept;
+
+		/// @brief 最大の成分を返します。
+		/// @remark Point{ 3, 2 } の場合、3 を返します。
+		/// @return 最大の成分
 		[[nodiscard]]
 		constexpr value_type maxComponent() const noexcept;
 

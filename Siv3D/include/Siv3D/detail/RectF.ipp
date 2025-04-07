@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -640,6 +640,26 @@ namespace s3d
 	inline constexpr RectF RectF::stretched(const value_type top, const value_type right, const value_type bottom, const value_type left) const noexcept
 	{
 		return{ (pos.x - left), (pos.y - top), (size.x + left + right), (size.y + top + bottom) };
+	}
+
+	inline constexpr RectF RectF::stretched(Arg::top_<value_type> top) const noexcept
+	{
+		return stretched(top.value(), 0, 0, 0);
+	}
+
+	inline constexpr RectF RectF::stretched(Arg::right_<value_type> right) const noexcept
+	{
+		return stretched(0, right.value(), 0, 0);
+	}
+
+	inline constexpr RectF RectF::stretched(Arg::bottom_<value_type> bottom) const noexcept
+	{
+		return stretched(0, 0, bottom.value(), 0);
+	}
+
+	inline constexpr RectF RectF::stretched(Arg::left_<value_type> left) const noexcept
+	{
+		return stretched(0, 0, 0, left.value());
 	}
 
 	inline constexpr RectF RectF::scaled(const double s) const noexcept

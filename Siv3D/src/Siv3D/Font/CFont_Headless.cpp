@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -283,6 +283,14 @@ namespace s3d
 		const auto& font = m_fonts[handleID];
 		Glyph glyph{ font->getGlyphInfoByGlyphIndex(font->getGlyphIndex(ch)) };
 		glyph.codePoint = ch.front();
+		return glyph;
+	}
+
+	Glyph CFont_Headless::getGlyphByGlyphIndex(const Font::IDType handleID, const GlyphIndex glyphIndex)
+	{
+		const auto& font = m_fonts[handleID];
+		Glyph glyph{ font->getGlyphInfoByGlyphIndex(glyphIndex) };
+		glyph.codePoint = 0; // 逆引きは不可能（1 つのグリフが複数のコードポイントを持つ場合があるため）
 		return glyph;
 	}
 

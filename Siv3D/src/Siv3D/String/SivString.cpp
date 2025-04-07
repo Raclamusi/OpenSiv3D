@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -252,6 +252,16 @@ namespace s3d
 		capitalize();
 
 		return std::move(*this);
+	}
+
+	String::value_type& String::choice()
+	{
+		return choice(GetDefaultRNG());
+	}
+
+	const String::value_type& String::choice() const
+	{
+		return choice(GetDefaultRNG());
 	}
 
 	size_t String::count(const value_type ch) const noexcept

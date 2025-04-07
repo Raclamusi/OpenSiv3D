@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -640,6 +640,32 @@ namespace s3d
 	inline bool String::any(Fty f) const
 	{
 		return std::any_of(m_string.begin(), m_string.end(), f);
+	}
+
+	SIV3D_CONCEPT_URBG_
+	inline String::value_type& String::choice(URBG&& rbg)
+	{
+		const size_t size = m_string.size();
+
+		if (size == 0)
+		{
+			throw std::out_of_range{ "String::choice(): String is empty" };
+		}
+
+		return m_string[RandomClosedOpen<size_t>(0, size, std::forward<URBG>(rbg))];
+	}
+
+	SIV3D_CONCEPT_URBG_
+	inline const String::value_type& String::choice(URBG&& rbg) const
+	{
+		const size_t size = m_string.size();
+
+		if (size == 0)
+		{
+			throw std::out_of_range{ "String::choice(): String is empty" };
+		}
+
+		return m_string[RandomClosedOpen<size_t>(0, size, std::forward<URBG>(rbg))];
 	}
 
 	template <class Fty, std::enable_if_t<std::is_invocable_r_v<bool, Fty, char32>>*>

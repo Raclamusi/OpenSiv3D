@@ -2,8 +2,8 @@
 //
 //	This file is part of the Siv3D Engine.
 //
-//	Copyright (c) 2008-2023 Ryo Suzuki
-//	Copyright (c) 2016-2023 OpenSiv3D Project
+//	Copyright (c) 2008-2025 Ryo Suzuki
+//	Copyright (c) 2016-2025 OpenSiv3D Project
 //
 //	Licensed under the MIT License.
 //
@@ -23,15 +23,27 @@
 extern "C"
 {
 	// libgif/libutil
+# if (GIFLIB_MAJOR == 5 && GIFLIB_MINOR == 2 && GIFLIB_RELEASE >= 2) || (GIFLIB_MAJOR == 5 && GIFLIB_MINOR > 2) || (GIFLIB_MAJOR > 5)
 	int
-	GifQuantizeBuffer(unsigned int Width,
-		unsigned int Height,
-		int* ColorMapSize,
-		GifByteType* RedInput,
-		GifByteType* GreenInput,
-		GifByteType* BlueInput,
-		GifByteType* OutputBuffer,
-		GifColorType* OutputColorMap);
+		GifQuantizeBuffer(unsigned int Width,
+			unsigned int Height,
+			int* ColorMapSize,
+			const GifByteType* RedInput,
+			const GifByteType* GreenInput,
+			const GifByteType* BlueInput,
+			GifByteType* OutputBuffer,
+			GifColorType* OutputColorMap);
+# else
+	int
+		GifQuantizeBuffer(unsigned int Width,
+			unsigned int Height,
+			int* ColorMapSize,
+			GifByteType* RedInput,
+			GifByteType* GreenInput,
+			GifByteType* BlueInput,
+			GifByteType* OutputBuffer,
+			GifColorType* OutputColorMap);
+# endif
 }
 
 namespace s3d
