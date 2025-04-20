@@ -26,6 +26,33 @@
             ctx.resume();
         }
     });
+
+    {
+        let keyDownEvent = null;
+        let timeoutId = null;
+    
+        addEventListener("keydown", event => {
+            if (!event.isTrusted) {
+                return;
+            }
+            keyDownEvent = event;
+        });
+    
+        addEventListener("keyup", event => {
+            if (!event.isTrusted) {
+                return;
+            }
+            const keyUpEvent = event;
+            if (keyDownEvent.timeStamp === keyUpEvent.timeStamp) {
+                clearTimeout(timeoutId);
+                dispatchEvent(keyDownEvent);
+                timeoutId = setTimeout(() => {
+                    dispatchEvent(keyUpEvent);
+                    timeoutId = null;
+                }, 100);
+            }
+        });
+    }
 })();
 
 __ATEXIT__.push(function() {
