@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 project(OpenSiv3D_Web
-    VERSION 0.6.15
+    VERSION 0.6.16
     LANGUAGES CXX C ASM
     HOMEPAGE_URL "https://github.com/Siv3D/OpenSiv3D"
     DESCRIPTION "A C++20 framework for creative coding (2D/3D games, media art, visualizers, and simulators)."
@@ -1303,7 +1303,7 @@ set(SIV3D_INTERNAL_INCLUDE_DIRS
   ../Siv3D/src/ThirdParty/skia
   ../Siv3D/src/ThirdParty/soloud/include
   ../Siv3D/src/ThirdParty-prebuilt
-  ../Dependencies/boost_1_74_0
+  ../Dependencies/boost_1_83_0
   ${SIV3D_THIRD_PARTY_INCLUDE_DIRS}
 )
 
