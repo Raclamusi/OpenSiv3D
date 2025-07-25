@@ -27,9 +27,9 @@ jobs:
       - name: Install Boost
         uses: ./.github/actions/download-boost
         with:
-          version: '1.74.0'
+          version: '1.83.0'
           cache-name: cache-boost-headers
-          destination: Dependencies/boost_1_74_0
+          destination: Dependencies/boost_1_83_0
 
       - name: Prebuild Third-party Libraries
         run: |
