@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - v6_web_develop
-      - test_ci_web
   pull_request:
     branches:
       - v6_web_develop
