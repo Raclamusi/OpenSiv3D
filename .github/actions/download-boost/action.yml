@@ -16,7 +16,7 @@ runs:
   steps:
     - name: Cache boost
       id: cache_boost
-      uses: actions/cache@v1
+      uses: actions/cache@v4
       env:
         cache-name: ${{ inputs.cache-name }}
       with:
