@@ -139,6 +139,16 @@ namespace s3d
 			}
 		}
 
+		bool LaunchFile(const FilePathView fileName)
+		{
+			return false;
+		}
+
+		bool LaunchFileWithTextEditor(const FilePathView fileName)
+		{
+			return false;
+		}
+
 		bool IsRunningInVisualStudio()
 		{
 			return false;
