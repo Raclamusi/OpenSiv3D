@@ -13,6 +13,8 @@
 # include <Siv3D/FileSystem.hpp>
 # include <Siv3D/Error.hpp>
 # include <Siv3D/Unicode.hpp>
+# include <unistd.h>
+# include <pwd.h>
 # include <emscripten.h>
 
 namespace s3d
@@ -51,6 +53,90 @@ namespace s3d
 		bool ShowInFileManager(const FilePathView path)
 		{
 			return false;
+		}
+
+		String ComputerName()
+		{
+			char name[256];
+
+			// 常に「emscripten」が返る？
+			if (gethostname(name, sizeof(name)) == 0)
+			{
+				return Unicode::Widen(name);
+			}
+			else
+			{
+				return{};
+			}
+		}
+
+		String UserName()
+		{
+			if (const char* username = std::getenv("USER"))
+			{
+				return Unicode::Widen(username);
+			}
+			else if (const char* username = std::getenv("USERNAME"))
+			{
+				return Unicode::Widen(username);
+			}
+			else if (const char* username = std::getenv("LOGNAME"))
+			{
+				return Unicode::Widen(username);
+			}
+			else if (const passwd* pw = getpwuid(getuid()))
+			{
+				return Unicode::Widen(pw->pw_name);
+			}
+			else
+			{
+				return{};
+			}
+		}
+
+		String FullUserName()
+		{
+			// 常に失敗する？
+			if (const passwd* pw = getpwuid(getuid()))
+			{
+				std::string gecos = pw->pw_gecos;
+
+				if (const size_t pos = gecos.find_first_of(',');
+					pos != std::string::npos)
+				{
+					gecos.resize(pos);
+				}
+
+				return Unicode::Widen(gecos);
+			}
+			else
+			{
+				return{};
+			}
+		}
+
+		String DefaultLocale()
+		{
+			if (const char* locale = setlocale(LC_ALL, ""))
+			{
+				return Unicode::Widen(locale).replace(U'_', U'-');
+			}
+			else
+			{
+				return U"en-US";
+			}
+		}
+
+		String DefaultLanguage()
+		{
+			if (const char* language = std::getenv("LANG"))
+			{
+				return Unicode::Widen(language).replace(U'_', U'-');
+			}
+			else
+			{
+				return U"en-US";
+			}
 		}
 
 		bool IsRunningInVisualStudio()
