@@ -29,7 +29,7 @@ namespace s3d
 
 		static int32 ExtractEntryCallback(void*, void*, [[maybe_unused]] mz_zip_file* file_info, const char*)
 		{
-			LOG_TRACE(U"Extracting: `{}`"_fmt(Unicode::Widen(file_info->filename)));
+			LOG_TRACE(U"Extracting: `{}`"_fmt(Unicode::FromUTF8(file_info->filename)));
 
 			return MZ_OK;
 		}
@@ -61,7 +61,7 @@ namespace s3d
 
 			if (!option->allowOverwrite)
 			{
-				LOG_TRACE(U"Extracting: path `{}` already exists"_fmt(Unicode::Widen(path)));
+				LOG_TRACE(U"Extracting: path `{}` already exists"_fmt(Unicode::FromUTF8(path)));
 
 				return MZ_EXIST_ERROR;
 			}
@@ -109,13 +109,13 @@ namespace s3d
 			}
 			else
 			{
-				const std::string archivePathC = Unicode::Narrow(path);
+				const std::string archivePathC = Unicode::ToUTF8(path);
 				err = ::mz_zip_reader_open_file(m_reader, archivePathC.c_str());
 			}
 
 		# else
 
-			const std::string archivePathC = Unicode::Narrow(path);
+			const std::string archivePathC = Unicode::ToUTF8(path);
 			err = ::mz_zip_reader_open_file(m_reader, archivePathC.c_str());
 
 		# endif
@@ -144,7 +144,7 @@ namespace s3d
 					break;
 				}
 
-				m_paths << Unicode::Widen(fileInfo->filename);
+				m_paths << Unicode::FromUTF8(fileInfo->filename);
 
 				err = ::mz_zip_reader_goto_next_entry(m_reader);
 
@@ -212,7 +212,7 @@ namespace s3d
 
 		if (pattern)
 		{
-			const std::string patternC = Unicode::Narrow(pattern);
+			const std::string patternC = Unicode::ToUTF8(pattern);
 			::mz_zip_reader_set_pattern(m_reader, patternC.c_str(), 1);
 		}
 		else
@@ -220,7 +220,7 @@ namespace s3d
 			::mz_zip_reader_set_pattern(m_reader, "*", 1);
 		}
 
-		const std::string targetDirectoryC = Unicode::Narrow(targetDirectory);
+		const std::string targetDirectoryC = Unicode::ToUTF8(targetDirectory);
 		err = ::mz_zip_reader_save_all(m_reader, targetDirectoryC.c_str());
 
 		if (err == MZ_END_OF_LIST)
@@ -250,7 +250,7 @@ namespace s3d
 			return{};
 		}
 
-		const std::string patternC = Unicode::Narrow(filePath);
+		const std::string patternC = Unicode::ToUTF8(filePath);
 		Array<Byte> data;
 		int32 err = MZ_OK;
 

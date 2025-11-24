@@ -173,6 +173,13 @@ namespace s3d
 
 		inline constexpr bool Intersect(const Point& a, const Triangle& b) noexcept
 		{
+			const double area2 = detail::Sign(b.p0, b.p1, b.p2);
+			if (area2 == 0.0)
+			{
+				return (a.intersects(Line{ b.p0, b.p1 })
+					|| a.intersects(Line{ b.p1, b.p2 })
+					|| a.intersects(Line{ b.p2, b.p0 }));
+			}
 			const bool b1 = (detail::Sign(a, b.p0, b.p1) < 0.0);
 			const bool b2 = (detail::Sign(a, b.p1, b.p2) < 0.0);
 			const bool b3 = (detail::Sign(a, b.p2, b.p0) < 0.0);
@@ -252,6 +259,13 @@ namespace s3d
 
 		inline constexpr bool Intersect(const Vec2& a, const Triangle& b) noexcept
 		{
+			const double area2 = detail::Sign(b.p0, b.p1, b.p2);
+			if (area2 == 0.0)
+			{
+				return (a.intersects(Line{ b.p0, b.p1 })
+					|| a.intersects(Line{ b.p1, b.p2 })
+					|| a.intersects(Line{ b.p2, b.p0 }));
+			}
 			const bool b1 = (detail::Sign(a, b.p0, b.p1) < 0.0);
 			const bool b2 = (detail::Sign(a, b.p1, b.p2) < 0.0);
 			const bool b3 = (detail::Sign(a, b.p2, b.p0) < 0.0);

@@ -35,7 +35,7 @@ namespace s3d
 
 		// Redirection 3xx
 		MultipleChoices				= 300,
-		movedPermanently			= 301,
+		MovedPermanently			= 301,
 		Found						= 302,
 		SeeOther					= 303,
 		NotModified					= 304,

@@ -109,11 +109,13 @@ namespace s3d
 			const double e3x = v1x - v3x;
 			const double e3y = v1y - v3y;
 
-			if (e1y * c1x >= e1x * c1y
-				&& e2y * c2x >= e2x * c2y
-				&& e3y * c3x >= e3x * c3y)
-			{
-				return true;
+			if (triangle.area() > 0.0) {
+				if (e1y * c1x >= e1x * c1y
+					&& e2y * c2x >= e2x * c2y
+					&& e3y * c3x >= e3x * c3y)
+				{
+					return true;
+				}
 			}
 
 			//;
