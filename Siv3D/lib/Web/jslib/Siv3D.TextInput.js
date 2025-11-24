@@ -164,6 +164,8 @@ mergeInto(LibraryManager.library, {
 
     siv3dSetTextInputCursor: function(index) {
         const targetTextNode = siv3dTextInputElement.childNodes[0];
+        // childNodes の要素が高々1つであることを前提としている
+        // つまり、事前に siv3dSetTextInputText が呼ばれていることを前提としている
 
         if (!targetTextNode) {
             return;
@@ -185,13 +187,21 @@ mergeInto(LibraryManager.library, {
 
     siv3dGetTextInputCursor: function() {
         const selection = window.getSelection();
-        const targetTextNode = siv3dTextInputElement.childNodes[0];
+        const targetTextNodes = siv3dTextInputElement.childNodes;
+        // contentEditable="plaintext-only" としたので childNodes の要素はすべて Text であることを前提としている
 
-        if (selection.focusNode == targetTextNode) {
-            return selection.focusOffset;
-        } else {
+        if (selection.focusNode?.parentElement != siv3dTextInputElement) {
             return 0;
         }
+
+        let offset = 0;
+        for (const node of targetTextNodes) {
+            if (selection.focusNode == node) {
+                return offset + selection.focusOffset;
+            }
+            offset += node.length;
+        }
+        return 0;  // 最初に parentElement をチェックしているので到達しないはず
     },
     siv3dGetTextInputCursor__sig: "iv",
     siv3dGetTextInputCursor__proxy: "sync",
