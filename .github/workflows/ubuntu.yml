@@ -2,6 +2,8 @@ name: Ubuntu
 
 on:
   push:
+    branches-ignore:
+      - test_ci_web
   pull_request:
 
 jobs:
