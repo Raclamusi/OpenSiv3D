@@ -76,5 +76,4 @@ jobs:
         working-directory: Web/App
         run: |
           export DISPLAY=:1
-          cd build
           emrun --browser chrome --timeout 180 --timeout_returncode 0 Siv3DApp.html
