@@ -64,7 +64,7 @@ fn main(
 
 	output.Position = s3d_Transform2D(position, VSConstants2D.transform);
 
-	output.Color = (VertexColor * VSConstants2D.colorMul).xyz;
+	output.Color = (VertexColor * VSConstants2D.colorMul);
 
 	output.UV = position;
 
