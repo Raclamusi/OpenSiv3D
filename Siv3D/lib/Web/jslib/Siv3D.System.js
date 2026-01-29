@@ -123,7 +123,16 @@ mergeInto(LibraryManager.library, {
     //
     siv3dLaunchBrowser: function(url) {
         const urlString = UTF8ToString(url);
-        
+
+        // local file
+        if (urlString.startsWith("/") && FS.analyzePath(urlString).exists) {
+            const html = FS.readFile(urlString, { encoding: "utf8" });
+            siv3dRegisterUserAction(function () {
+                window.open("", "_blank").document.documentElement.innerHTML = html;
+            });
+            return;
+        }
+
         siv3dRegisterUserAction(function () {
             window.open(urlString, '_blank')
         });
