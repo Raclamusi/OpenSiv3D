@@ -13,12 +13,14 @@
 # include <Siv3D/FileSystem.hpp>
 # include "CLicenseManager.hpp"
 # include <Siv3D/LicenseManager/LicenseList.hpp>
+# include "LicenseList_Web.hpp"
 
 namespace s3d
 {
 	CLicenseManager::CLicenseManager()
 		: m_licenses(std::begin(detail::licenses), std::end(detail::licenses))
 	{
+		m_licenses.insert((m_licenses.begin() + 1), std::begin(detail::licenses_Web), std::end(detail::licenses_Web));
 		m_applicationName = FileSystem::BaseName(FileSystem::ModulePath());
 	}
 
