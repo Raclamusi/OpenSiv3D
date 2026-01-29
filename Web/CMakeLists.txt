@@ -129,7 +129,6 @@ set(SIV3D_INTERNAL_SOURCES
   ../Siv3D/src/Siv3D-Platform/Web/Siv3D/FreestandingMessageBox/FreestandingMessageBox_Web.cpp
   ../Siv3D/src/Siv3D-Platform/Web/Siv3D/LicenseManager/CLicenseManager.cpp
   ../Siv3D/src/Siv3D-Platform/Web/Siv3D/LicenseManager/LicenseManagerFactory.cpp
-  ../Siv3D/src/Siv3D-Platform/Web/Siv3D/LicenseManager/SivLicenseManager.cpp
   ../Siv3D/src/Siv3D-Platform/Web/Siv3D/MessageBox/SivMessageBox_Web.cpp
   ../Siv3D/src/Siv3D-Platform/Web/Siv3D/Mesh/MeshFactoryWithoutWebGPU.cpp
   ../Siv3D/src/Siv3D-Platform/Web/Siv3D/Microphone/MicrophoneDetail.cpp
@@ -405,7 +404,7 @@ set(SIV3D_INTERNAL_SOURCES
   ../Siv3D/src/Siv3D/KlattTTS/SivKlattTTS.cpp
   # ../Siv3D/src/Siv3D/LicenseManager/CLicenseManager.cpp
   # ../Siv3D/src/Siv3D/LicenseManager/LicenseManagerFactory.cpp
-  # ../Siv3D/src/Siv3D/LicenseManager/SivLicenseManager.cpp
+  ../Siv3D/src/Siv3D/LicenseManager/SivLicenseManager.cpp
   ../Siv3D/src/Siv3D/Line/SivLine.cpp
   ../Siv3D/src/Siv3D/Line3D/SivLine3D.cpp
   ../Siv3D/src/Siv3D/LineString/SivLineString.cpp

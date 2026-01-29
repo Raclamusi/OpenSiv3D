@@ -12,11 +12,12 @@
 # include <Siv3D/Keyboard.hpp>
 # include <Siv3D/FileSystem.hpp>
 # include "CLicenseManager.hpp"
+# include <Siv3D/LicenseManager/LicenseList.hpp>
 
 namespace s3d
 {
 	CLicenseManager::CLicenseManager()
-		: m_licenses()
+		: m_licenses(std::begin(detail::licenses), std::end(detail::licenses))
 	{
 		m_applicationName = FileSystem::BaseName(FileSystem::ModulePath());
 	}
@@ -37,12 +38,32 @@ namespace s3d
 
 	void CLicenseManager::setApplicationLicense(const String& applicationName, const LicenseInfo& license)
 	{
+		if (not m_hasApplicationLicense)
+		{
+			const LicenseInfo info
+			{
+				.title		= license.title,
+				.copyright	= license.copyright,
+				.text		= license.text.xml_escaped()
+			};
+			m_licenses.push_front(info);
 
+			++m_num_customLicenses;
+			m_hasApplicationLicense = true;
+		}
+		else
+		{
+			m_licenses.front() = license;
+		}
+
+		m_applicationName = applicationName;
 	}
 
 	void CLicenseManager::addLicense(const LicenseInfo& license)
 	{
+		m_licenses.insert((m_licenses.begin() + m_num_customLicenses), license);
 
+		++m_num_customLicenses;
 	}
 
 	const Array<LicenseInfo>& CLicenseManager::enumLicenses() const noexcept
