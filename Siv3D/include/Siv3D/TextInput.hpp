@@ -129,16 +129,27 @@ namespace s3d
 		/// @brief 変換待ちのテキストの範囲を返します。
 		/// @return 変換待ちのテキストの範囲
 		[[nodiscard]]
-		std::pair<int32, int32> GetCandicateCursorIndex();
+		std::pair<int32, int32> GetCandidateCursorIndex();
 
 		void SetFocusToTextInput(bool focused);
 
-		void SyncronizeText(StringView text);
+		void SynchronizeText(StringView text);
 
 		[[nodiscard]]
 		int32 GetCursorIndex();
 
 		void SetCursorIndex(int32 index);
+
+		/// @brief 変換待ちのテキストの範囲を返します。
+		/// @return 変換待ちのテキストの範囲
+		/// @deprecated この関数名には綴りの誤りがあります。代わりに `GetCandidateCursorIndex()` を使用してください。
+		[[deprecated("Use GetCandidateCursorIndex() instead")]]
+		[[nodiscard]]
+		inline std::pair<int32, int32> GetCandicateCursorIndex() { return GetCandidateCursorIndex(); }
+
+		/// @deprecated この関数名には綴りの誤りがあります。代わりに `SynchronizeText()` を使用してください。
+		[[deprecated("Use SynchronizeText() instead")]]
+		inline void SyncronizeText(StringView text) { return SynchronizeText(text); }
 	}
 
 # endif

@@ -1031,7 +1031,7 @@ namespace s3d
 
 							# elif SIV3D_PLATFORM(WEB)
 
-								const std::pair<int32, int32> editingTarget = Platform::Web::TextInput::GetCandicateCursorIndex();
+								const std::pair<int32, int32> editingTarget = Platform::Web::TextInput::GetCandidateCursorIndex();
 
 							# else
 
@@ -1086,7 +1086,7 @@ namespace s3d
 			{
 				if (text.lastCursorPos != text.cursorPos)
 				{
-					Platform::Web::TextInput::SyncronizeText(text.text);
+					Platform::Web::TextInput::SynchronizeText(text.text);
 					Platform::Web::TextInput::SetCursorIndex(text.cursorPos);		
 				}
 				else if (auto currentCursorPos = Platform::Web::TextInput::GetCursorIndex(); text.lastCursorPos != currentCursorPos)
@@ -1686,7 +1686,7 @@ namespace s3d
 			{
 				if (text.lastCursorPos != text.cursorPos)
 				{
-					Platform::Web::TextInput::SyncronizeText(text.text);
+					Platform::Web::TextInput::SynchronizeText(text.text);
 					Platform::Web::TextInput::SetCursorIndex(text.cursorPos);		
 				}
 				else if (auto currentCursorPos = Platform::Web::TextInput::GetCursorIndex(); text.lastCursorPos != currentCursorPos)
@@ -2292,7 +2292,7 @@ namespace s3d
 
 							# elif SIV3D_PLATFORM(WEB)
 
-								const std::pair<int32, int32> editingTarget = Platform::Web::TextInput::GetCandicateCursorIndex();
+								const std::pair<int32, int32> editingTarget = Platform::Web::TextInput::GetCandidateCursorIndex();
 
 							# else
 

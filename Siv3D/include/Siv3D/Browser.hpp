@@ -28,11 +28,14 @@ namespace s3d
 			ControlShift
 		};
 
-		struct BrowserKeyboardShorcut
+		struct BrowserKeyboardShortcut
 		{ 
 			Input key;
 			KeyModifier modifier;
 		};
+
+		/// @deprecated この型名には綴りの誤りがあります。代わりに `BrowserKeyboardShortcut` を使用してください。
+		using BrowserKeyboardShorcut [[deprecated("Use BrowserKeyboardShortcut instead")]] = BrowserKeyboardShortcut;
 
 		/// @brief ブラウザ上の仮想ファイルをローカルにダウンロードします。
 		/// @param filePath ブラウザ上の仮想ファイルへのパス
@@ -56,7 +59,14 @@ namespace s3d
 		/// @brief ブラウザ側が用意しているキーボードショートカットを可能な限り無効化します
 		/// @param allowList 許可するキーボードショートカットのリスト
 		/// @remarks タブを閉じるなど、一部のキーボードショートカットはブラウザの制約により無効化することができません
-		void DisbaleBrowserKeyboardShortcuts(const Array<BrowserKeyboardShorcut>& allowList = {});
+		void DisableBrowserKeyboardShortcuts(const Array<BrowserKeyboardShortcut>& allowList = {});
+
+		/// @brief ブラウザ側が用意しているキーボードショートカットを可能な限り無効化します
+		/// @param allowList 許可するキーボードショートカットのリスト
+		/// @remarks タブを閉じるなど、一部のキーボードショートカットはブラウザの制約により無効化することができません
+		/// @deprecated この関数名には綴りの誤りがあります。代わりに `DisableBrowserKeyboardShortcuts()` を使用してください。
+		[[deprecated("Use DisableBrowserKeyboardShortcuts() instead")]]
+		inline void DisbaleBrowserKeyboardShortcuts(const Array<BrowserKeyboardShortcut>& allowList = {}) { return DisableBrowserKeyboardShortcuts(allowList); }
 	}
 
 # endif

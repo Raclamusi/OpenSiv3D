@@ -6,7 +6,7 @@ SIV3D_SET(EngineOption::Renderer::WebGPU)
 
 void Main()
 {
-	Platform::Web::System::DisbaleBrowserKeyboardShortcuts({ { .key = KeyF12 } });
+	Platform::Web::System::DisableBrowserKeyboardShortcuts({ { .key = KeyF12 } });
 
 	// 背景の色を設定する | Set the background color
 	Scene::SetBackground(ColorF{ 0.6, 0.8, 0.7 });

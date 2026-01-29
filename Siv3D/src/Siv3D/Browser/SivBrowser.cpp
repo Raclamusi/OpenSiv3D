@@ -211,7 +211,7 @@ namespace s3d
 			return result;
 		}
 
-		void DisbaleBrowserKeyboardShortcuts(const Array<BrowserKeyboardShorcut>& allowList)
+		void DisableBrowserKeyboardShortcuts(const Array<BrowserKeyboardShortcut>& allowList)
 		{
 			for (auto [ key, modifier ] : allowList)
 			{

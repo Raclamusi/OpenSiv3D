@@ -190,7 +190,7 @@ namespace s3d
 			extern void siv3dSetTextInputText(const char* text);
 		}
 		
-		std::pair<int32, int32> GetCandicateCursorIndex()
+		std::pair<int32, int32> GetCandidateCursorIndex()
 		{
 			return Siv3DEngine::Get<ISiv3DTextInput>()->getCursorIndex();
 		}
@@ -200,7 +200,7 @@ namespace s3d
 			Siv3DEngine::Get<ISiv3DTextInput>()->enableIME(focused);
 		}
 
-		void SyncronizeText(StringView text)
+		void SynchronizeText(StringView text)
 		{
 			detail::siv3dSetTextInputText(text.narrow().c_str());
 		}
