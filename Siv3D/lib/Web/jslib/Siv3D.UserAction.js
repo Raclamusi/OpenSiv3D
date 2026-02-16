@@ -29,7 +29,7 @@ mergeInto(LibraryManager.library, {
         siv3dTriggerUserAction();
         e.preventDefault();
     },
-    $siv3dUserActionHookCallBack__deps: [ "$siv3dHasUserActionTriggered", "$siv3dTriggerUserAction" ],
+    $siv3dUserActionTouchEndCallBack__deps: [ "$siv3dTriggerUserAction" ],
 
     siv3dStartUserActionHook: function() {
         Module["canvas"].addEventListener('touchend', siv3dUserActionTouchEndCallBack);

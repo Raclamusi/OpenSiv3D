@@ -173,8 +173,8 @@ mergeInto(LibraryManager.library, {
         setValue(height, video.videoHeight, 'i32');
         setValue(fps, 29.7, 'double');
     },
-    siv3dQueryVideoPlaybackedTime__sig: "viiii",
-    siv3dQueryVideoPlaybackedTime__deps: ["$videoElements"],
+    siv3dQueryVideoPreference__sig: "viiii",
+    siv3dQueryVideoPreference__deps: ["$videoElements"],
 
     siv3dPlayVideo: function(idx) {
         const video = videoElements[idx];
