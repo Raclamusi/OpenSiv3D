@@ -1625,6 +1625,7 @@ set_target_properties(Siv3DUnitTest PROPERTIES
 set(SIV3D_ASYNCIFY_IMPORTS
   siv3dRequestAnimationFrame
   siv3dGetClipboardText
+  siv3dGetClipboardImage
   siv3dDecodeImageFromFile
   siv3dSleepUntilWaked
   invoke_v

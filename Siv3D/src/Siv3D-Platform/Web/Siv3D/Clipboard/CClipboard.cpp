@@ -11,6 +11,7 @@
 
 # include <Siv3D/EngineLog.hpp>
 # include <Siv3D/Unicode.hpp>
+# include <Siv3D/MemoryViewReader.hpp>
 # include <Siv3D/Window/IWindow.hpp>
 # include <Siv3D/Common/Siv3DEngine.hpp>
 # include "CClipboard.hpp"
@@ -29,6 +30,12 @@ namespace s3d
 
 		__attribute__((import_name("siv3dGetClipboardTextAsync")))
 		extern void siv3dGetClipboardTextAsync(siv3dGetClipboardTextAsyncCallBack, void*);
+
+		__attribute__((import_name("siv3dSetClipboardImage")))
+		extern void siv3dSetClipboardImage(const void* pngPtr, size_t pngSize);
+
+		__attribute__((import_name("siv3dGetClipboardImage")))
+		extern std::pair<void*, size_t> siv3dGetClipboardImage();
 	}
 
 	CClipboard::CClipboard() {}
@@ -66,7 +73,12 @@ namespace s3d
 	{
 		image.clear();
 
-		// [Siv3D ToDo]
+		const auto [pngPtr, pngSize] = detail::siv3dGetClipboardImage();
+		if (pngPtr)
+		{
+			image = Image{ MemoryViewReader{ pngPtr, pngSize }, ImageFormat::PNG };
+			std::free(pngPtr);
+		}
 
 		return (not image.isEmpty());
 	}
@@ -87,7 +99,8 @@ namespace s3d
 
 	void CClipboard::setImage(const Image& image)
 	{
-		// [Siv3D ToDo]
+		const auto pngBlob = image.encodePNG();
+		detail::siv3dSetClipboardImage(pngBlob.data(), pngBlob.size());
 	}
 
 	void CClipboard::clear()

@@ -57,6 +57,8 @@ set(SIV3D_ASYNCIFY_ADD
 
   "s3d::Clipboard::GetText(*)"
   "s3d::CClipboard::getText(*)"
+  "s3d::Clipboard::GetImage(*)"
+  "s3d::CClipboard::getImage(*)"
 
   "s3d::SimpleHTTP::Save(*)"
   "s3d::SimpleHTTP::Load(*)"
@@ -72,6 +74,7 @@ set(SIV3D_ASYNCIFY_ADD
 set(SIV3D_ASYNCIFY_IMPORTS
   siv3dRequestAnimationFrame
   siv3dGetClipboardText
+  siv3dGetClipboardImage
   siv3dDecodeImageFromFile
   siv3dSleepUntilWaked
   invoke_v

@@ -72,4 +72,69 @@ mergeInto(LibraryManager.library, {
     },
     siv3dGetClipboardTextAsync__sig: "vii",
     siv3dGetClipboardTextAsync__deps: [ "$siv3dRegisterUserAction" ],
+
+    siv3dSetClipboardImage: function(pngPtr, pngSize) {
+        const pngData = new Uint8Array(HEAPU8.buffer, pngPtr, pngSize);
+        const pngBlob = new Blob([ pngData ], { type: "image/png" });
+        const clipboardItem = new ClipboardItem({ "image/png": pngBlob });
+
+        siv3dRegisterUserAction(function () {
+            navigator.clipboard.write([ clipboardItem ]);
+        });
+    },
+    siv3dSetClipboardImage__sig: "vii",
+    siv3dSetClipboardImage__proxy: "sync",
+    siv3dSetClipboardImage__deps: [ "$siv3dRegisterUserAction" ],
+
+    $siv3dGetClipboardImageImpl: function(wakeUp, returnPtr) {
+        if (!navigator.clipboard.read) {
+            err("Reading clipboard is not allowed in this browser.");
+            wakeUp();
+            return;
+        }
+
+        siv3dRegisterUserAction(async function () {
+            let ptr = 0;
+            let size = 0;
+            try {
+                const items = await navigator.clipboard.read();
+                if (items.length > 0 && items[0].types.includes("image/png")) {
+                    const blob = await items[0].getType("image/png");
+                    const data = new Uint8Array(await blob.arrayBuffer());
+                    ptr = Module["_malloc"](data.length);
+                    size = data.length;
+                    HEAPU8.set(data, ptr);
+                }
+            }
+            catch (_) {}
+            HEAPU32[(returnPtr>>2)+0] = ptr;
+            HEAPU32[(returnPtr>>2)+1] = size;
+            wakeUp();
+        });
+    },
+    $siv3dGetClipboardImageImpl__deps: [ "$siv3dRegisterUserAction" ],
+
+#if ASYNCIFY
+    siv3dGetClipboardImage: function(returnPtr) {
+        return Asyncify.handleSleep(function (wakeUp) {
+            siv3dGetClipboardImageImpl(wakeUp, returnPtr);
+        });
+    },
+    siv3dGetClipboardImage__sig: "vi",
+    siv3dGetClipboardImage__deps: [ "$siv3dGetClipboardImageImpl", "$Asyncify" ],
+#elif PROXY_TO_PTHREAD
+    siv3dGetClipboardImage: function(ctx, returnPtr) {
+        siv3dGetClipboardImageImpl(function () {
+            Module["_emscripten_proxy_finish"](ctx);
+        }, returnPtr);
+    },
+    siv3dGetClipboardImage__sig: "vii",
+    siv3dGetClipboardImage__deps: [ "$siv3dGetClipboardImageImpl" ],
+#else
+    siv3dGetClipboardImage: function(returnPtr) {
+        HEAPU32[(returnPtr>>2)+0] = 0;
+        HEAPU32[(returnPtr>>2)+1] = 0;
+    },
+    siv3dGetClipboardImage__sig: "vi",
+#endif
 });
