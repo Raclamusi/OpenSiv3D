@@ -116,6 +116,7 @@ namespace s3d
 			{
 				origin = Unicode::FromUTF8(originNamePtr);
 			}
+			std::free(originNamePtr);
 
 			String temporaryFile{U"/tmp/http_get_response"};
 
@@ -194,6 +195,7 @@ namespace s3d
 			{
 				origin = Unicode::FromUTF8(originNamePtr);
 			}
+			std::free(originNamePtr);
 
 			String temporaryFile{U"/tmp/http_post_response"};
 

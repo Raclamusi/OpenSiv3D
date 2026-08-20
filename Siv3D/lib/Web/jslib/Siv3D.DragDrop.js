@@ -74,6 +74,7 @@ mergeInto(LibraryManager.library, {
 
                     const namePtr = allocate(intArrayFromString(filePath), ALLOC_NORMAL);
                     callback(namePtr, adusted.x, adusted.y);
+                    Module["_free"](namePtr);
 
                     siv3dDragDropFileReader.removeEventListener("load", onLoaded);
                 });

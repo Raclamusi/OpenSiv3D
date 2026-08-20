@@ -56,7 +56,7 @@ namespace s3d
 		if (auto rawClipBoardText = detail::siv3dGetClipboardText(); rawClipBoardText != nullptr)
 		{
 			text = Unicode::FromUTF8(rawClipBoardText);
-			delete rawClipBoardText;
+			std::free(rawClipBoardText);
 		}
 		
 		return (not text.isEmpty());

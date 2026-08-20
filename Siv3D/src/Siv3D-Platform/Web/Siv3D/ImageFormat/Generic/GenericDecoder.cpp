@@ -82,7 +82,7 @@ namespace s3d
 		LOG_SCOPED_TRACE(U"GenericDecoder::decode()");
 
 		const auto imageSize = reader.size();
-		const auto imageData = ::malloc(imageSize);
+		const auto imageData = std::malloc(imageSize);
 
 		reader.read(imageData, imageSize);
 
@@ -93,6 +93,9 @@ namespace s3d
 		Image image{ data.width, data.height };
 
 		std::memcpy(image.data(), data.decodedImage, image.size_bytes());
+
+		std::free(data.decodedImage);
+		std::free(imageData);
 
 		return image;
 	}
