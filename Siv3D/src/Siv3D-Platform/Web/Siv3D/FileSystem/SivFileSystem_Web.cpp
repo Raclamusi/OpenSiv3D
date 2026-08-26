@@ -589,7 +589,7 @@ namespace s3d
 				}
 			}
 
-			return "";
+			return false;
 		}		
 	}
 }
