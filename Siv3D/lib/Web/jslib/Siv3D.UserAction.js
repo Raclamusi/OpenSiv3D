@@ -2,19 +2,18 @@ mergeInto(LibraryManager.library, {
     $siv3dPendingUserActions: [],
 
     $siv3dTriggerUserAction: function() {
-        for (var i = 0; i < siv3dPendingUserActions.length; i++) {
-            (siv3dPendingUserActions[i])();
+        if (navigator.userActivation.isActive) {
+            for (const func of siv3dPendingUserActions) {
+                func();
+            }
+            siv3dPendingUserActions.splice(0);
         }
-
-        siv3dPendingUserActions.splice(0);
     },
     $siv3dTriggerUserAction__deps: [ "$siv3dPendingUserActions" ],
 
     $siv3dRegisterUserAction: function(func) {
         siv3dPendingUserActions.push(func);
-        if (navigator.userActivation.isActive) {
-            siv3dTriggerUserAction();
-        }
+        siv3dTriggerUserAction();
     },
     $siv3dRegisterUserAction__deps: [ "$siv3dPendingUserActions", "$autoResumeAudioContext", "$dynCall" ],
 
