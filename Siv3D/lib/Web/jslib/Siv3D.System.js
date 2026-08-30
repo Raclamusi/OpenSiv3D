@@ -30,20 +30,22 @@ mergeInto(LibraryManager.library, {
     siv3dSetCursorStyle__sig: "vi",
 
     siv3dRequestFullscreen: function() {
-        siv3dRegisterUserAction(function () {
-            Browser.requestFullscreen();
-        });
+        const canvasContainerElement = document.querySelector("#canvas-container");
+        if (canvasContainerElement.requestFullscreen && document.fullscreenElement === null) {
+            siv3dRegisterUserAction(function () {
+                canvasContainerElement.requestFullscreen();
+            });
+        }
     },
     siv3dRequestFullscreen__sig: "v",
-    siv3dRequestFullscreen__deps: [ "$siv3dRegisterUserAction", "$Browser" ],
+    siv3dRequestFullscreen__deps: [ "$siv3dRegisterUserAction" ],
 
     siv3dExitFullscreen: function() {
-        siv3dRegisterUserAction(function () {
-            Browser.exitFullscreen();
-        });
+        if (document.exitFullscreen && document.fullscreenElement !== null) {
+            document.exitFullscreen();
+        }
     },
     siv3dExitFullscreen__sig: "v",
-    siv3dExitFullscreen__deps: [ "$siv3dRegisterUserAction", "$Browser" ],
 
     //
     // MessageBox
