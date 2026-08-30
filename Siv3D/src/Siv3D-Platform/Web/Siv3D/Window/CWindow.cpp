@@ -31,6 +31,8 @@ namespace s3d
 		extern void siv3dRequestFullscreen();
 		__attribute__((import_name("siv3dExitFullscreen")))
 		extern void siv3dExitFullscreen();
+		__attribute__((import_name("siv3dIsFullscreen")))
+		extern bool siv3dIsFullscreen();
 
 		static void ErrorCallback(const int error, const char* description)
 		{
@@ -332,6 +334,9 @@ namespace s3d
 
 		// sizeMove
 		m_state.sizeMove = false; // [Siv3D ToDo]
+
+		// fullscreen
+		m_state.fullscreen = detail::siv3dIsFullscreen();
 	}
 
 	void CWindow::OnMove(GLFWwindow* window, const int x, const int y)

@@ -47,6 +47,11 @@ mergeInto(LibraryManager.library, {
     },
     siv3dExitFullscreen__sig: "v",
 
+    siv3dIsFullscreen: function() {
+        return document.fullscreenElement !== null;
+    },
+    siv3dIsFullscreen__sig: "i",
+
     //
     // MessageBox
     //
