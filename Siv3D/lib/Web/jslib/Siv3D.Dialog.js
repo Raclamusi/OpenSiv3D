@@ -17,8 +17,8 @@ mergeInto(LibraryManager.library, {
         siv3dInputElement.accept = filter;
         siv3dInputElement.multiple = acceptMuilitple;
 
-        function cancelHandler(e) {
-            {{{ makeDynCall('viii', 'callback') }}}(0, 0, futurePtr);
+        function cancelHandler() {
+            callback(0, 0, futurePtr);
             _siv3dMaybeAwake();
         }
 
