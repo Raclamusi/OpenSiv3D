@@ -42,7 +42,6 @@ mergeInto(LibraryManager.library, {
     siv3dRegisterDragExit__deps: [ "$siv3dRegisterDragExit" ],
     siv3dRegisterDragExit__sig: "vi",
 
-    $siv3dDragDropFileReader: null,
     $siv3dRegisterDragDrop: function(callback) {
         Module["canvas"]["ondrop"] = function (e) {
             e.preventDefault();
@@ -61,25 +60,18 @@ mergeInto(LibraryManager.library, {
                     Module["_free"](strPtr);
                 })            
             } else if (items[0].kind === 'file') {
-                const file = items[0].getAsFile();
-
-                if (!siv3dDragDropFileReader) {
-                    siv3dDragDropFileReader = new FileReader();
-                }
-
-                const filePath = "/tmp/" + file.name;
-
-                siv3dDragDropFileReader.addEventListener("load", function onLoaded() {
-                    FS.writeFile(filePath, new Uint8Array(siv3dDragDropFileReader.result));
-
-                    const namePtr = allocate(intArrayFromString(filePath), ALLOC_NORMAL);
-                    callback(namePtr, adusted.x, adusted.y);
-                    Module["_free"](namePtr);
-
-                    siv3dDragDropFileReader.removeEventListener("load", onLoaded);
+                const files = [...e.dataTransfer.files];
+                const tasks = files.map(async file => {
+                    const filePath = `/tmp/${file.name}`;
+                    FS.writeFile(filePath, new Uint8Array(await file.arrayBuffer()));
+                    return filePath;
                 });
-
-                siv3dDragDropFileReader.readAsArrayBuffer(file);              
+                Promise.allSettled(tasks).then(results => {
+                    const filePaths = results.filter(r => r.status === 'fulfilled').map(r => r.value);
+                    const pathsPtr = allocate(intArrayFromString(filePaths.join("\n")), ALLOC_NORMAL);
+                    callback(pathsPtr, adusted.x, adusted.y);
+                    Module["_free"](pathsPtr);
+                });           
             }
         };
     },
@@ -87,5 +79,5 @@ mergeInto(LibraryManager.library, {
         siv3dRegisterDragDrop({{{ makeDynCall('viii', 'ptr') }}});
     },
     siv3dRegisterDragDrop__sig: "vi",
-    siv3dRegisterDragDrop__deps: [ "$siv3dRegisterDragDrop", "$siv3dDragDropFileReader", "$FS" ],
+    siv3dRegisterDragDrop__deps: [ "$siv3dRegisterDragDrop", "$FS" ],
 });
