@@ -52,6 +52,16 @@ mergeInto(LibraryManager.library, {
     },
     siv3dIsFullscreen__sig: "i",
 
+    siv3dHasFocus: function() {
+        return document.hasFocus();
+    },
+    siv3dHasFocus__sig: "i",
+
+    siv3dGetDevicePixelRatio: function() {
+        return window.devicePixelRatio || 1;
+    },
+    siv3dGetDevicePixelRatio__sig: "f",
+
     //
     // MessageBox
     //

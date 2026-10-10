@@ -33,6 +33,10 @@ namespace s3d
 		extern void siv3dExitFullscreen();
 		__attribute__((import_name("siv3dIsFullscreen")))
 		extern bool siv3dIsFullscreen();
+		__attribute__((import_name("siv3dHasFocus")))
+		extern bool siv3dHasFocus();
+		__attribute__((import_name("siv3dGetDevicePixelRatio")))
+		extern float siv3dGetDevicePixelRatio();
 
 		static void ErrorCallback(const int error, const char* description)
 		{
@@ -306,10 +310,7 @@ namespace s3d
 		::glfwGetFramebufferSize(m_window, &m_state.frameBufferSize.x, &m_state.frameBufferSize.y);
 
 		// scaling
-		float xScale = 1.0f, yScale = 1.0f;
-		// [Siv3DWeb ToDo]
-		// ::glfwGetWindowContentScale(m_window, &xScale, &yScale);
-		m_state.scaling = Max(xScale, yScale);
+		m_state.scaling = detail::siv3dGetDevicePixelRatio();
 		
 		// titleBarHeight
 		// [Siv3D ToDo]
@@ -330,7 +331,7 @@ namespace s3d
 			&& (m_state.style == WindowStyle::Sizable);
 		
 		// focused
-		m_state.focused = (::glfwGetWindowAttrib(m_window, GLFW_FOCUSED) == GLFW_TRUE);
+		m_state.focused = detail::siv3dHasFocus();
 
 		// sizeMove
 		m_state.sizeMove = false; // [Siv3D ToDo]
